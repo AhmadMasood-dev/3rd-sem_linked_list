@@ -36,10 +36,10 @@ int main(int argc, char *argv[])
     std::cin >> size;
     student *std1 = new student[size];
     data(std1, size);
-   student *std2 = new student[size];
+    student *std2 = new student[size];
     if (argc == 2)
     {
-       
+
         ofstream file1(argv[1], ios::binary | ios::out);
         if (!file1.is_open())
         {
@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
             file1.write(reinterpret_cast<char *>(&std1), sizeof(student) * size);
             file1.close();
         }
-     
         ifstream file(argv[1], ios::binary | ios::in);
         if (!file.is_open())
         {

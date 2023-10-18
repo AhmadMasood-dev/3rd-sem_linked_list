@@ -24,7 +24,7 @@ int main()
     Node *newnode = new Node();
     newnode->data = 4;
     newnode->next = top;
-    top = newnode;  
+    top = newnode;
 
     Node *ptr;
     ptr = top;

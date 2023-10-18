@@ -121,26 +121,12 @@ int main()
     {
         ptr = head;
     }
+    cout << "Data of List after swap is :   ";
     while (ptr != NULL)
     {
-        cout << "data 1 is : " << ptr->data << endl;
+        cout << ptr->data << " -> " << endl;
         ptr = ptr->next;
     }
 
     return 0;
 }
-
-// int size;
-// cout << "Enter number of nodes : ";
-// cin >> size;
-
-// Node *headptr = head;
-// for (int i = 1; i <= size; i++)
-// {
-//     cout << "Enter a data of Node  " << i << " is : ";
-//     Node *node = new Node();
-//     cin >> node->data;
-//     node->next = NULL;
-//     headptr->next = node;
-//     headptr = headptr->next;
-// }

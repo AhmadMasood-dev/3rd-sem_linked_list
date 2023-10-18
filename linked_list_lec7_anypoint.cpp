@@ -47,7 +47,7 @@ int main()
     Node *newNode = new Node();
     p->next = newNode;
     newNode->data = 4;
-    newNode->next = temp;   
+    newNode->next = temp;
     Node *ptr = top;
     while (ptr != NULL)
     {

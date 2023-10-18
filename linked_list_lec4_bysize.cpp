@@ -13,10 +13,7 @@ int main()
     int size;
     cout << "Enter number of nodes : ";
     cin >> size;
-    // Node *first=new Node();
-    // first->data=10;
-    // first->next=NULL;
-    // top=first;
+
     Node *ptr = top;
     for (int i = 1; i <= size; i++)
     {
