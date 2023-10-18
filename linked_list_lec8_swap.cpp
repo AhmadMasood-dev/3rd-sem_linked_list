@@ -124,7 +124,7 @@ int main()
     cout << "Data of List after swap is :   ";
     while (ptr != NULL)
     {
-        cout << ptr->data << " -> " << endl;
+        cout << ptr->data << " -> " ;
         ptr = ptr->next;
     }
 

@@ -1,2 +1,1 @@
-
-       else if (location1 == 1 )
+ obj_1.push(1);
