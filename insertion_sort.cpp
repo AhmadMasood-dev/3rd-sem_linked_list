@@ -50,9 +50,10 @@ public:
     }
     void print()
     {
+         cout << "value are : ";
         for (int i = 0; i < size; i++)
         {
-            cout << "value " << i + 1 << " is : " << array[i] << endl;
+           cout << array[i] <<"   ";
         }
         cout << "----------------------------------\n";
     }
