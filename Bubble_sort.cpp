@@ -22,9 +22,12 @@ public:
     }
     void bubble_sort()
     {
-        int temp, count;
+        int temp;
+        bool iteration = false;
         for (int i = 1; i < size; i++)
         {
+            iteration = true;
+
             for (int j = 0; j < size - i; j++)
             {
                 if (array[j] > array[j + 1])
@@ -32,13 +35,14 @@ public:
                     temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
-                    count++;
+                    iteration = false;
                 }
             }
-        }
-        if (count == 0)
-        {
-            cout << "Array is already sorted" << endl;
+            if (iteration == true)
+            {
+                cout << "Array is sorted " << endl;
+                return;
+            }
         }
     }
     void random_number(int n)
@@ -70,19 +74,24 @@ public:
 int main()
 {
 
-    int n;
     Bubble_sort obj_1, obj_2;
+    int n;
     cout << "Enter a size of array :  ";
     cin >> n;
     obj_1.setvalues(n);
     obj_1.bubble_sort();
     obj_2.random_number(n);
+
     cout << "Array of random number Before sort" << endl;
+
     obj_2.print();
     obj_2.bubble_sort();
+
     cout << "Array of random number After sort" << endl;
+
     obj_2.print();
-    cout << "Simple Array After sort" << endl;
+    cout << "Simple Array is" << endl;
+
     obj_1.print();
     return 0;
 }
