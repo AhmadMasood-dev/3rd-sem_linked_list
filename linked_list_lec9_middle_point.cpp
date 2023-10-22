@@ -90,6 +90,12 @@ int main()
         count++;
 
     } while (ch == 'y' || ch == 'Y');
+    Node *ptr4 = head->next;
+    while (ptr4 != NULL)
+    {
+        cout << ptr4->data << " -> ";
+        ptr4 = ptr4->next;
+    }
 
     return 0;
 }
