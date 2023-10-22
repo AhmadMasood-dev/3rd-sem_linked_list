@@ -53,9 +53,13 @@ int main()
     do
     {
         middle_point = count / 2;
-        if (middle_point % 2 == 0)
-            count++;
-
+        if (count % 2 == 0)
+        {
+        }
+        else
+        {
+            middle_point++;
+        }
         Node *ptr3;
         ptr3 = head->next;
 
@@ -71,18 +75,20 @@ int main()
 
         cout << "Enter a value for new middle node  : ";
         cin >> new_node->data;
-        cout << "--------------------------------\n";
+        cout << "-----------------------------------\n";
         ptr3->next = new_node;
         new_node->next = temp;
-        cout << "You want more node in middle point\tEnter y for Yes Or press any buttom for exit : ";
-        cin >> ch;
-
         Node *ptr = head->next;
         while (ptr != NULL)
         {
             cout << ptr->data << " -> ";
             ptr = ptr->next;
         }
+        cout << "\n-----------------------------------\n";
+        cout << "You want more node in middle point\nEnter Y for Yes Or press any buttom for exit : ";
+        cin >> ch;
+        count++;
+
     } while (ch == 'y' || ch == 'Y');
 
     return 0;
