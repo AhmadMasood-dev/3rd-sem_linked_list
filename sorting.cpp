@@ -1,18 +1,21 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-template <class T>
+#include <fstream>
+#include <string>
+
 class Sorting
 {
 private:
-    T *array;
+    int *array;
     int size;
+    static int count;
 
 public:
     void setvalues(int n)
     {
         size = n;
-        array = new T[size];
+        array = new int[size];
         for (int i = 0; i < size; i++)
         {
             array[i] = i + 1;
@@ -38,10 +41,6 @@ public:
             array[i] = array[min_index];
             array[min_index] = temp;
         }
-        if (count == 0)
-        {
-            std::cout << "Array is already sorted\n";
-        }
     }
 
     void bubble_sort()
@@ -64,7 +63,7 @@ public:
             }
             if (iteration == true)
             {
-                std::cout << "Array is sorted\n";
+
                 return;
             }
         }
@@ -88,20 +87,93 @@ public:
         }
         if (count == 0)
         {
-            std::cout << "Array is already sorted\n";
+
             return;
         }
     }
     void random_number(int n)
     {
         size = n;
-        array = new T[size];
+        array = new int[size];
         int num;
         srand(time(NULL));
         for (int i = 0; i < size; i++)
         {
             num = (rand() % 10 + 1);
             array[i] = num;
+        }
+    }
+    void take_time(std::fstream &file, int choice)
+    {
+        if (!file.is_open())
+        {
+            std::cout << "File is not open\n";
+        }
+        else
+        {
+            Sorting::count++;
+            int runs = 10;
+            double total_time = 0.0;
+            std::string name;
+            for (int i = 1; i <= runs; i++)
+            {
+
+                if (choice == 1)
+                {
+                    name = "Selection_sort";
+
+                    auto start = std::chrono::steady_clock::now();
+                    selection_Sort();
+                    auto end = std::chrono::steady_clock::now();
+                    std::chrono::duration<double> elapsed_seconds = end - start;
+                    total_time += elapsed_seconds.count();
+                    // std::cout << "Time is " << elapsed_seconds.count() << std::endl;
+                }
+                else if (choice == 2)
+                {
+                    name = "Bubble_sort";
+
+                    auto start = std::chrono::steady_clock::now();
+                    bubble_sort();
+                    auto end = std::chrono::steady_clock::now();
+                    std::chrono::duration<double> elapsed_seconds = end - start;
+                    total_time += elapsed_seconds.count();
+                    // std::cout << "Time is " << elapsed_seconds.count() << std::endl;
+                }
+                else if (choice == 3)
+                {
+                    name = "Insertion_sort";
+
+                    auto start = std::chrono::steady_clock::now();
+                    insertion_sort();
+                    auto end = std::chrono::steady_clock::now();
+                    std::chrono::duration<double> elapsed_seconds = end - start;
+                    total_time += elapsed_seconds.count();
+                    // std::cout << "Time is " << elapsed_seconds.count() << std::endl;
+                }
+            }
+            double average = total_time / runs;
+            if (count == 1)
+            {
+                file << name << "," << size << ","
+                     << "Sorted"
+                     << "," << runs << "," << average << "\n";
+                std::cout << "Data store successfully of sorted array\n";
+            }
+            if (count == 2)
+            {
+
+                file << name << "," << size << ","
+                     << "Random"
+                     << "," << runs << "," << average << "\n";
+                std::cout << "Data store successfully of Random array\n";
+            }
+            else
+            {
+                count = 0;
+            }
+
+            std::cout << "Data store successfully\n";
         }
     }
     void print()
@@ -119,14 +191,19 @@ public:
         delete[] array;
     }
 };
+int Sorting::count = 0;
 
 int main()
 {
-    Sorting<int> obj_1, obj_2;
+    Sorting obj_1, obj_2;
     int n = 100000;
     obj_1.setvalues(n);
 
     int option, choice;
+    char file_name[20] = "Sorting.csv";
+    std::fstream file(file_name, std::ios::out);
+    file << "Algorithm,Array Size,Array Type,Number of Runs,Average Time (s)\n";
+    file.close();
 
     do
     {
@@ -141,58 +218,31 @@ int main()
         case 1:
         {
             std::cout << "Takes some Time..\n";
-            auto start = std::chrono::steady_clock::now();
-
-            obj_1.selection_Sort();
-
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsed_seconds = end - start;
-            std::cout << "Already sorted array took " << elapsed_seconds.count() << " s " << std::endl;
-
+            file.open("Sorting.csv");
+            obj_1.take_time(file, 1);
             obj_2.random_number(n);
-            start = std::chrono::steady_clock::now();
-            obj_2.selection_Sort();
-            end = std::chrono::steady_clock::now();
-            elapsed_seconds = end - start;
-            std::cout << "Random Array after sorting takes : " << elapsed_seconds.count() << " s " << std::endl;
+            obj_2.take_time(file, 1);
+            file.close();
         }
         break;
         case 2:
         {
             std::cout << "Takes some Time..\n";
-            auto start = std::chrono::steady_clock::now();
-
-            obj_1.bubble_sort();
-
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsed_seconds = end - start;
-            std::cout << "Already sorted array took " << elapsed_seconds.count() << " s " << std::endl;
-
+            file.open("Sorting.csv");
+            obj_1.take_time(file, 2);
             obj_2.random_number(n);
-            start = std::chrono::steady_clock::now();
-            obj_2.bubble_sort();
-            end = std::chrono::steady_clock::now();
-            elapsed_seconds = end - start;
-            std::cout << "Random Array after sorting takes : " << elapsed_seconds.count() << " s " << std::endl;
+            obj_2.take_time(file, 2);
+            file.close();
         }
         break;
         case 3:
         {
             std::cout << "Takes some Time..\n";
-            auto start = std::chrono::steady_clock::now();
-
-            obj_1.insertion_sort();
-
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double> elapsed_seconds = end - start;
-            std::cout << "Already sorted array took " << elapsed_seconds.count() << " s " << std::endl;
-
+            file.open("Sorting.csv");
+            obj_1.take_time(file, 2);
             obj_2.random_number(n);
-            start = std::chrono::steady_clock::now();
-            obj_2.insertion_sort();
-            end = std::chrono::steady_clock::now();
-            elapsed_seconds = end - start;
-            std::cout << "Random Array after sorting takes : " << elapsed_seconds.count() << " s " << std::endl;
+            obj_2.take_time(file, 2);
+            file.close();
         }
         break;
         case 4:
