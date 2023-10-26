@@ -54,6 +54,11 @@ int main()
         cout << "data 1 is : " << ptr->data << endl;
         ptr = ptr->next;
     }
+    delete first;
+    delete second;
+    delete third;
+    delete newNode;
+    delete top;
 
     return 0;
 }

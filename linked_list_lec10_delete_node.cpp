@@ -116,5 +116,8 @@ int main()
         ptr = ptr->next;
     }
 
+    delete first;
+    delete ptr1;
+
     return 0;
 }

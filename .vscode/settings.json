@@ -32,5 +32,6 @@
         "thread": "cpp",
         "tuple": "cpp",
         "utility": "cpp"
-    }
+    },
+    "memory-view.showMemoryPanel": true
 }

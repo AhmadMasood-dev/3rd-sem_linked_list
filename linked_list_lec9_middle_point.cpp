@@ -97,5 +97,8 @@ int main()
         ptr4 = ptr4->next;
     }
 
+    delete first;
+    delete ptr1;
+
     return 0;
 }

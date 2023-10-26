@@ -6,6 +6,11 @@ class Node
 public:
     int data;
     Node *next;
+    ~Node()
+    {
+        cout<<"destructor ";
+        
+    }
 };
 int main()
 {
@@ -57,6 +62,12 @@ int main()
         cout << ptr->data << " -> ";
         ptr = ptr->next;
     }
+    delete head;
+
+    delete temp2;
+    
+    delete ptr1;
+   
 
     return 0;
 }

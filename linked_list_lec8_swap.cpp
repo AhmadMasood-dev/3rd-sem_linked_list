@@ -124,9 +124,15 @@ int main()
     cout << "Data of List after swap is :   ";
     while (ptr != NULL)
     {
-        cout << ptr->data << " -> " ;
+        cout << ptr->data << " -> ";
         ptr = ptr->next;
     }
+    delete one;
+    delete two;
+    delete three;
+    delete four;
+    delete five;
+    delete six;
 
     return 0;
 }
