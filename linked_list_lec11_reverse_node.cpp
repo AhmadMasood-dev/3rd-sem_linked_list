@@ -6,11 +6,6 @@ class Node
 public:
     int data;
     Node *next;
-    ~Node()
-    {
-        cout<<"destructor ";
-        
-    }
 };
 int main()
 {
