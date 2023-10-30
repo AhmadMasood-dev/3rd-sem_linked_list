@@ -62,7 +62,9 @@ int main()
     int count = 0;
     for (int i = 0; i < size; i++)
     {
-        if (name[i] == name2[i]){ }       
+        if (name[i] == name2[i]){ 
+            count++;
+        }       
     }
     if (count == size)
         cout << "YES";
