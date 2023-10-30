@@ -14,7 +14,7 @@ private:
 public:
     stack()
     {
-        TOP = nullptr;
+        TOP = NULL;
         size = 0;
     }
     stack(const Node &rhs)
@@ -52,11 +52,11 @@ public:
     {
         size++;
 
-        if (TOP == nullptr)
+        if (TOP == NULL)
         {
             TOP = new Node();
             TOP->data = val;
-            TOP->next = nullptr;
+            TOP->next = NULL;
         }
         else
         {
@@ -81,7 +81,7 @@ public:
 
     bool empty()
     {
-        if (TOP == nullptr)
+        if (TOP == NULL)
         {
             return true;
         }
@@ -97,7 +97,7 @@ public:
     bool full()
     {
         Node *temp = new Node();
-        if (temp != nullptr)
+        if (temp != NULL)
         {
             delete temp;
             return false;
@@ -111,7 +111,7 @@ public:
     void Display()
     {
         Node *ptr = TOP;
-        while (ptr != nullptr)
+        while (ptr != NULL)
         {
             std::cout << ptr->data << " -> ";
             ptr = ptr->next;
