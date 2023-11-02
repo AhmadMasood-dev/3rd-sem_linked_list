@@ -31,7 +31,11 @@
         "ratio": "cpp",
         "thread": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "sstream": "cpp"
     },
     "memory-view.showMemoryPanel": true
 }
