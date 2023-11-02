@@ -57,15 +57,16 @@ public:
         }
         std::cout << "\n-----------------------------\n";
     }
-    int TOP_value(){
-        if (TOP==NULL)
+    int TOP_value()
+    {
+        if (TOP == NULL)
         {
-            throw ("Staack underflow");
+            throw("Staack underflow");
         }
-        else{
+        else
+        {
             return TOP->data;
         }
-        
     }
     ~stack() {}
 };
@@ -74,6 +75,6 @@ int main()
 {
     stack obj_1;
     obj_1.push(1);
-   cout<<"TOP value is " <<obj_1.TOP_value()<<endl;
-     obj_1.Display();
+    cout << "TOP value is " << obj_1.TOP_value() << endl;
+    obj_1.Display();
 }
