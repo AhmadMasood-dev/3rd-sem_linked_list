@@ -170,37 +170,42 @@ public:
             }
         }
         clear();
+        delete data;
         return isempty();
     }
     void postfix(char *exp)
     {
         size = strlen(exp);
         data = new char[size];
-        data = exp;
-        std::cout << "data is:\n"
-                  << data;
+        output = new char[size];
+        std::cout << "Expression is : " << exp << std::endl;
         int k = 0;
-        for (int i = 0; data[i] != '\0'; i++)
+        for (int i = 0; exp[i] != '\0'; i++)
         {
-            if (data[i] >= 0 && data[i] <= 9)
+
+            if (exp[i] >= '0' && exp[i] <= '9')
             {
-                data[k] = data[i];
+                output[k] = exp[i];
                 k++;
             }
-            else if (data[i] >= '+' && data[i] <= '/')
+            else if (exp[i] > '+' || exp[i] < '/')
             {
-
-                if (isempty())
+                if (exp[i > data[TOP]])
                 {
-                    push(data[i]);
+                    push(exp[i]);
                 }
+                else if (exp[i] <=data[TOP]){
+
+                }
+
             }
         }
+        std::cout << "data is : " << data << " output " << output << std::endl;
     }
 };
 int main()
 {
-    char exp[20] = "([{(a+b)*(c+d)}])";
+    char exp[20] = "2+8-7/(6*5)";
     try
     {
         stack obj_1;
@@ -212,6 +217,7 @@ int main()
         else
             std::cout << "Expression is Not balanced\n";
         obj_1.postfix(exp);
+        obj_1.Display();
     }
     catch (const char *msg)
     {
