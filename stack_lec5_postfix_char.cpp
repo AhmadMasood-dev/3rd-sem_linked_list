@@ -212,7 +212,7 @@ int main()
         bool num = obj_1.balance(exp);
         if (num == true)
         {
-            std::cout << "Expression is balanced" << std::endl;
+            std::cout << "Expression is balanced hello" << std::endl;
         }
         else
             std::cout << "Expression is Not balanced\n";
