@@ -1,11 +1,12 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 class stack
 {
 private:
-    char *data;
+    std::string *data;
     int size;
-    char *output;
+    std::string *output;
     int TOP;
 
 public:
@@ -13,8 +14,9 @@ public:
     {
         TOP = -1;
         size = 0;
+        data = new std::string[10];
     }
-    void push(char value)
+    void push(std::string value)
     {
         if (TOP == size - 1)
         {
@@ -24,16 +26,19 @@ public:
         {
             TOP++;
             data[TOP] = value;
+            // std::cout << "TOP value in pus is " << data[TOP] << "\n";
         }
     }
     void pop()
     {
+        // std::cout << "POPOP";
         if (TOP == -1)
         {
             throw("Stack underflow");
         }
         else
         {
+
             TOP--;
         }
     }
@@ -58,7 +63,7 @@ public:
     {
         return (TOP == size - 1);
     }
-    char stacktop()
+    std::string stacktop()
     {
         if (!isempty())
         {
@@ -66,16 +71,16 @@ public:
             return data[TOP];
         }
         else
-            return -1;
+            return 0;
     }
     void Display()
     {
 
-        for (int i = TOP; i >= 0; i--)
+        for (int i = TOP - 1; i >= 0; i--)
         {
             std::cout << "The value of stack point is : " << data[i] << std::endl;
         }
-        std::cout << "------------------------------------------\n";
+        std::cout << "\n------------------------------------------\n";
     }
     ~stack()
     {
@@ -91,15 +96,13 @@ public:
     int balance(char *exp)
     {
         size = strlen(exp);
-        data = new char[size];
-        data = exp;
-        for (int i = 0; data[i] != '\0'; i++)
+        for (int i = 0; exp[i] != '\0'; i++)
         {
-            if (data[i] == '(')
+            if (exp[i] == '(')
             {
-                push('(');
+                push("(");
             }
-            else if (data[i] == ')')
+            else if (exp[i] == ')')
             {
                 if (isempty() == true)
                 {
@@ -107,7 +110,7 @@ public:
                 }
                 else
                 {
-                    if (stacktop() != '(')
+                    if (stacktop() != "(")
                     {
                         return false;
                     }
@@ -117,11 +120,11 @@ public:
                     }
                 }
             }
-            else if (data[i] == '{')
+            else if (exp[i] == '{')
             {
-                push('{');
+                push("{");
             }
-            else if (data[i] == '}')
+            else if (exp[i] == '}')
             {
                 if (isempty() == true)
                 {
@@ -129,7 +132,7 @@ public:
                 }
                 else
                 {
-                    if (stacktop() != '{')
+                    if (stacktop() != "{")
                     {
                         return false;
                     }
@@ -140,12 +143,12 @@ public:
                     }
                 }
             }
-            else if (data[i] == '[')
+            else if (exp[i] == '[')
             {
 
-                push('[');
+                push("[");
             }
-            else if (data[i] == ']')
+            else if (exp[i] == ']')
             {
                 if (isempty() == true)
                 {
@@ -153,7 +156,7 @@ public:
                 }
                 else
                 {
-                    if (stacktop() != '[')
+                    if (stacktop() != "[")
                     {
 
                         return false;
@@ -169,121 +172,106 @@ public:
             {
             }
         }
-        clear();
-        delete[] data;
         return isempty();
     }
-    void postfix(char *exp)
+    void postfix(std::string exp)
     {
-        size = strlen(exp);
-        data = new char[size];
-        output = new char[size];
+
+        size = exp.length();
+        output = new std::string[size];
         std::cout << "Expression is : " << exp << std::endl;
         int k = 0;
+        std::string exp_convert;
         for (int i = 0; exp[i] != '\0'; i++)
         {
 
             if (exp[i] - '0' >= 0 && exp[i] - '0' <= 9)
             {
-                output[k] = exp[i];
+                exp_convert = exp[i];
+                output[k] = exp_convert;
                 k++;
             }
             else if (exp[i] == '+' || exp[i] == '/' || exp[i] == '*' || exp[i] == '-')
             {
+                exp_convert = exp[i];
                 if (isempty())
                 {
-                    std::cout << data << "data\n";
-                    push(exp[i]);
+                    exp_convert = exp[i];
+                    // std::cout << "exp_cnver 1" << exp_convert << "\n";
+                    push(exp_convert);
                 }
-                else if (exp[i] >= stacktop())
+                else if (exp_convert >= stacktop())
                 {
-                    std::cout << data << "data2\n";
-                    push(exp[i]);
+                    exp_convert = exp[i];
+                    // std::cout << "exp_cnver 2" << exp_convert << stacktop() << "\n";
+                    push(exp_convert);
                 }
-                else if (exp[i] <= stacktop())
+                else if (exp_convert <= stacktop())
                 {
-                    while (exp[i] <= stacktop())
+                    while (exp_convert <= stacktop())
                     {
                         // Display();
-                        std::cout << data << "Pop is " << stacktop() << std::endl;
-                        output[k] = stacktop();
+                        // std::cout << "Pop is : " << stacktop() << std::endl;
+                        exp_convert = stacktop();
+                        output[k] = exp_convert;
                         k++;
                         pop();
+                        // std::cout << "new pus is : " << stacktop() << std::endl;
                     }
-                    push(exp[i]);
+                    exp_convert = exp[i];
+                    push(exp_convert);
                 }
             }
         }
-        std::cout << "data is : " << data << " output " << output << std::endl;
+        //  std::cout << "data is : " << data << " output " << output << std::endl;
         while (TOP != -1)
         {
-            std::cout << "Pop is " << stacktop();
+            //  std::cout << "Pop operator is " << stacktop();
             output[k] = stacktop();
             k++;
             pop();
         }
 
-        std::cout << "data is : " << data << " output " << output << std::endl;
-        clear();
-        delete[] data;
-        // for (int i = 0; output[i] != '\0'; i++)
-        // {
-        //     if (output[i] == '+' || output[i] == '-' || output[i] == '*' || output[i] == '/')
-        //     {
-        //         char option;
-        //         option = output[i];
-        //         switch (option)
-        //         {
-        //         case '+':
-        //         {
-        //             if (i==2)
-        //             {
-        //                 push(output[i-2]+output[i-1]);
-        //             }
+        // std::cout << "data is : " << data << " output " << output << std::endl;
 
-        //         }
-
-        //         break;
-
-        //         default:
-        //             break;
-        //         }
-        //     }
-        // }
-        // Evaluate postfix expression
-        data = new char[5];
-        std::cout << "top is " << TOP;
-        for (int i = 0; output[i] != '\0'; i++)
+        for (int i = 0; output[i] != "\0"; i++)
         {
-
-            if (output[i] - '0' >= 0 && output[i] - '0' <= 9)
+            if (output[i] >= "0" && output[i] <= "9")
             {
-                push(output[i]);
+                push(output[i]); // Convert to string and push onto the stack
             }
-            else if (output[i] == '+' || output[i] == '-' || output[i] == '*' || output[i] == '/')
+            else if (output[i] == "+")
             {
-                int operand2 = stacktop() - '0';
+                std::string num2 = stacktop();
                 pop();
-                int operand1 = stacktop() - '0';
+                std::string num1 = stacktop();
                 pop();
-
-                switch (output[i])
-                {
-                case '+':
-                    push(operand1 + operand2 + '0');
-                    break;
-                case '-':
-                    push(operand1 - operand2 + '0');
-                    break;
-                case '*':
-                    push(operand1 * operand2 + '0');
-                    break;
-                case '/':
-                    push(operand1 / operand2 + '0');
-                    break;
-                }
+                push(std::to_string(std::stoi(num1) + std::stoi(num2)));
             }
-            std::cout << "\nTop is : " << TOP << "stack is : " << stacktop() << "\n";
+            else if (output[i] == "-")
+            {
+                std::string num2 = stacktop();
+                pop();
+                std::string num1 = stacktop();
+                pop();
+                push(std::to_string(std::stoi(num1) - std::stoi(num2)));
+            }
+            else if (output[i] == "*")
+            {
+                std::string num2 = stacktop();
+                pop();
+                std::string num1 = stacktop();
+                pop();
+                push(std::to_string(std::stoi(num1) * std::stoi(num2)));
+            }
+            else if (output[i] == "/")
+            {
+                std::string num2 = stacktop();
+                pop();
+                std::string num1 = stacktop();
+                pop();
+                push(std::to_string(std::stoi(num1) / std::stoi(num2)));
+            }
         }
     }
     void Result()
@@ -296,13 +284,15 @@ public:
         {
             std::cout << "Result: " << stacktop() << std::endl;
         }
-        Display();
+        // Display();
     }
 };
 int main()
 {
-    // char exp[20] = " 8/9-2+8-7/6*5";
-    char exp[20] = " 2+2*8/4 ";
+    std::cout << "Enter a simple expression ";
+    char exp[20];
+    std::cin >> exp;
+
     try
     {
         stack obj_1;
