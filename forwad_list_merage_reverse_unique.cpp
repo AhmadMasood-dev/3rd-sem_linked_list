@@ -15,7 +15,7 @@ private:
 public:
     forward_list()
     {
-        front = nullptr;
+        front = NULL;
         size = 0;
     }
 
@@ -23,10 +23,10 @@ public:
     {
         Node<T> *temp;
         temp = new Node<T>();
-        if (front == nullptr)
+        if (front == NULL)
         {
             temp->data = val;
-            temp->next = nullptr;
+            temp->next = NULL;
             front = temp;
         }
         else
@@ -39,7 +39,7 @@ public:
     }
     void pop_front()
     {
-        if (front == nullptr)
+        if (front == NULL)
         {
             throw("Stack underflow");
         }
@@ -58,9 +58,9 @@ public:
         Node<T> *to_del;
         temp = front;
 
-        while (temp != nullptr)
+        while (temp != NULL)
         {
-            if (temp->next == nullptr)
+            if (temp->next == NULL)
             {
                 return;
             }
@@ -87,13 +87,13 @@ public:
         temp = front;
         Node<T> *temp_address;
         Node<T> *back_address;
-        while (temp != nullptr)
+        while (temp != NULL)
         {
             temp_address = temp->next;
 
             if (point == 1)
             {
-                temp->next = nullptr;
+                temp->next = NULL;
                 back_address = temp;
                 point++;
             }
@@ -115,12 +115,12 @@ public:
         rhs_temp = rhs.front;
         Node<T> *last_address_temp;
         last_address_temp = this->front;
-        while (last_address_temp->next != nullptr)
+        while (last_address_temp->next != NULL)
         {
             last_address_temp = last_address_temp->next;
         }
 
-        while (rhs_temp != nullptr)
+        while (rhs_temp != NULL)
         {
             last_address_temp->next = rhs_temp;
             rhs_temp = rhs_temp->next;
@@ -131,9 +131,9 @@ public:
         int value;
         Node<T> *i;
         Node<T> *j;
-        for (i = ptr2; i->next != nullptr; i = i->next)
+        for (i = ptr2; i->next != NULL; i = i->next)
         {
-            for (j = i->next; j != nullptr; j = j->next)
+            for (j = i->next; j != NULL; j = j->next)
             {
                 if (i->data > j->data)
                 {
@@ -145,24 +145,24 @@ public:
             }
         }
     }
-    void sort()
-    {
-        Node<T> *temp;
-        temp = front;
-        Node<T> *first_temp;
-        Node<T> *self_temp;
-        while (temp != nullptr)
-        {
-            Node<T> *to_sort;
-            to_sort = temp->next;
-            if ()
-            {
-            }
-        }
-    }
+    // void sort()
+    // {
+    //     Node<T> *temp;
+    //     temp = front;
+    //     Node<T> *first_temp;
+    //     Node<T> *self_temp;
+    //     while (temp != NULL)
+    //     {
+    //         Node<T> *to_sort;
+    //         to_sort = temp->next;
+    //         if ()
+    //         {
+    //         }
+    //     }
+    // }
     int Front()
     {
-        if (front == nullptr)
+        if (front == NULL)
         {
             throw("Stack underflow");
         }
@@ -173,7 +173,7 @@ public:
     }
     bool empty()
     {
-        if (front == nullptr)
+        if (front == NULL)
             return true;
         else
             return false;
@@ -188,14 +188,14 @@ public:
     void display()
     {
         Node<T> *ptr = front;
-        while (ptr != nullptr)
+        while (ptr != NULL)
         {
             std::cout << ptr->data << " -> ";
             ptr = ptr->next;
         }
         std::cout << "\n------------------------\n";
     }
-    int size()
+    int size_list()
     {
         if (size > 0)
         {
@@ -204,9 +204,57 @@ public:
         else
             throw("foward list is empty");
     }
+    class iterator
+    {
+    private:
+        Node<T> *ptr;
+
+    public:
+        friend forward_list;
+        bool operator==(const iterator &rhs)
+        {
+            if (this->ptr == rhs.ptr)
+                return true;
+            else
+                return false;
+        }
+        bool operator!=(const iterator &rhs)
+        {
+            if (this->ptr != rhs.ptr)
+                return true;
+            else
+                return false;
+        }
+        T operator*()
+        {
+            return ptr->data;
+        }
+        T *operator->()
+        {
+            return &this->ptr.data;
+        }
+        iterator operator++()
+        {
+            this->ptr = this->ptr->next;
+            return *this;
+        }
+    };
+    iterator begin()
+    {
+        iterator it;
+        it.ptr = front;
+        return it;
+    }
+    iterator end()
+    {
+        iterator it;
+        it.ptr = NULL;
+        return it;
+    }
+
     ~forward_list()
     {
-        while (front != nullptr)
+        while (front != NULL)
         {
             pop_front();
         }
@@ -248,6 +296,15 @@ int main()
     obj_4.push_front(9);
     obj_4.push_front(3);
     obj_4.display();
-    obj_4.sort(); // starting sort
+    // starting sort
+
+    forward_list<int>::iterator iter;
+    iter = obj_1.begin();
+    while (iter != obj_1.end())
+    {
+        std::cout << *iter << std::endl;
+        ++iter;
+    }
+
     return 0;
 }
