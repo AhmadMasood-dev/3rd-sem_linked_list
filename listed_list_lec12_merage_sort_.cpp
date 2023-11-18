@@ -67,7 +67,7 @@ int main()
 
     delete head;
 
-    delete ptr,i,j,ptr2,head_ptr;
+    delete ptr,ptr2,head_ptr;
 
     return 0;
 }
