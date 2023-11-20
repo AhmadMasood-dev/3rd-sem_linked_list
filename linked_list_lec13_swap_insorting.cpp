@@ -32,28 +32,52 @@ int main()
     first = head->next;
     int point = 1;
     Node *temp, *temp2;
-
-    while (first != NULL)
+    Node *pre = head;
+    head_ptr = head->next;
+    while (head_ptr != NULL)
     {
-
-        temp = first;
-        while (temp != NULL)
+        first = head->next; // 7
+        while (first != NULL)
         {
-            temp2 = temp->next;
-            if (temp->data > temp2->data )
+            temp = first;        // 7
+            temp2 = first->next; // 4
+            cout << "temp->data" << temp->data << "temp2->data" << temp2->data << "pre->data" << pre->data << "\n";
+            if (temp->data > temp2->data)
             {
-                cout << "if";
-            temp = temp->next;
+                // if (point == 1)
+                //{
+
+                Node *p1, *p2;
+                p2 = temp2->next;   // 2
+                p1 = temp->next;    // 4
+                temp2->next = temp; // 10
+                temp->next = p2;    // 2
+                if (head->next == temp)
+                {
+                    head->next = temp2;
+                    first = head->next;
+                    cout << "change head";
+                }
+                else if (temp->next == NULL)
+                {
+                    pre->next = temp2;
+                }
+                else
+                {
+                    cout << "first->data " << first->data << "\n"
+                         << "pre->data" << pre->data << "\n";
+
+                    first = p1;
+                    pre->next = first;
+                }
+
+                // }
             }
-            else
-            {
-                Node *newnode;
-                newnode = temp2->next;
-                temp2->next = temp;
-                temp->next = newnode;
-            }
+
+            pre = first;
+            first = first->next;
         }
-        first = first->next;
+        head_ptr = head_ptr->next;
     }
 
     Node *ptr = head->next;
