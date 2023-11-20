@@ -32,6 +32,7 @@ int main()
         cout << "DATA of Nodes is " << ptr->data << endl;
         ptr = ptr->next;
     }
+    delete first, second, forth, five, third;
 
     return 0;
 }

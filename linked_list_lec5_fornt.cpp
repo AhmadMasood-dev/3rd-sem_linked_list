@@ -8,7 +8,7 @@ public:
 };
 int main()
 {
-    Node *top = new Node();
+    Node *top;
     Node *first = new Node;
     Node *second = new Node;
     Node *third = new Node;
@@ -33,6 +33,6 @@ int main()
         cout << "data 1 is : " << ptr->data << endl;
         ptr = ptr->next;
     }
-
+    delete newnode, first, second, third;
     return 0;
 }

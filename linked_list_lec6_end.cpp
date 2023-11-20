@@ -39,6 +39,6 @@ int main()
         cout << "data 1 is : " << ptr->data << endl;
         ptr = ptr->next;
     }
-
+    delete top, first, second, third, newnode;
     return 0;
 }

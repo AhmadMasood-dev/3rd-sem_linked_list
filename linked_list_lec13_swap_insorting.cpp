@@ -14,9 +14,9 @@ int main()
     Node *head_ptr;
     head_ptr = head;
 
-    int size;
+    int size = 4;
     cout << "Enter size of nodes 1 ";
-    cin >> size;
+    // cin >> size;
 
     for (int i = 1; i <= size; i++)
     {
@@ -37,24 +37,20 @@ int main()
     {
 
         temp = first;
-        temp2 = first->next;
-        if (temp->data > temp2->data)
+        while (temp != NULL)
         {
-            cout << "if";
-            if (point == 1)
+            temp2 = temp->next;
+            if (temp->data > temp2->data )
             {
-
-                Node *newnode = temp;
-                temp->next = temp2->next;
-                temp2->next = newnode;
-                head = temp2;
-                point++;
+                cout << "if";
+            temp = temp->next;
             }
             else
             {
-                cout << "kln";
-                temp->next = temp2->next;
+                Node *newnode;
+                newnode = temp2->next;
                 temp2->next = temp;
+                temp->next = newnode;
             }
         }
         first = first->next;
