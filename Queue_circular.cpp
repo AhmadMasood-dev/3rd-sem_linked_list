@@ -9,11 +9,11 @@ private:
     int size;
 
 public:
-    queue_hospital()
+    queue_hospital(int queueSize)
     {
-        Front_data = 0;
-        Back_data = 0;
-        size = 10;
+        Front_data = -1;
+        Back_data = -1;
+        size = queueSize;
         array = new T[size];
     }
     ~queue_hospital()
@@ -52,32 +52,125 @@ public:
         }
         return x;
     }
-
+    bool isEmpty()
+    {
+        if (Back_data == Front_data)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    T Front()
+    {
+        if (Front_data == -1)
+        {
+            throw("queue underflow");
+        }
+        else
+        {
+            return array[Front_data];
+        }
+    }
+    T Back()
+    {
+        if (Back_data == -1)
+        {
+            throw("queue underflow");
+        }
+        else
+        {
+            return array[Back_data];
+        }
+    }
     void display()
     {
+
         int i = Front_data + 1;
+
         do
         {
-            cout << "\ni is : " << array[i];
+            cout << "i is : " << array[i] << "\n";
             i = (i + 1) % size;
         } while (i != (Back_data + 1) % size);
 
         cout << endl;
     }
-};
+    };
+    template <class T>
+    class HospitalQueueSystem : public queue_hospital<T>
+    {
+         private:
+        int numQueues;
+    public:
+        HospitalQueueSystem(int numQueues, int queueSize) : QueueHospital(queueSize)
+        {
+            this->numQueues = numQueues;
+        }
+
+        void enqueue(int queueIndex, const T &patientName)
+        {
+            if (queueIndex >= 0 && queueIndex < this->numQueues)
+            {
+                this->push(patientName);
+                cout << patientName << " added to the queue " << queueIndex << ".\n";
+            }
+            else
+            {
+                cout << "Invalid queue index.\n";
+            }
+        }
+
+        void dequeue(int queueIndex)
+        {
+            if (queueIndex >= 0 && queueIndex < this->numQueues)
+            {
+                try
+                {
+                    T patient = this->pop();
+                    cout << patient << " removed from the queue " << queueIndex << ".\n";
+                }
+                catch (const char *e)
+                {
+                    cout << e << "\n";
+                }
+            }
+            else
+            {
+                cout << "Invalid queue index.\n";
+            }
+        }
+
+        void viewQueue()
+        {
+            cout << "Queue contents:\n";
+            this->display();
+        }
+
+   
+    };
+
 int main()
 {
     try
     {
+        int numQueues = 3;
+        int queueSize = 4;
 
-        queue_hospital<string> obj_1;
-        obj_1.push("zain");
-        obj_1.push("aa");
-        obj_1.push("sas");
-        obj_1.isFull();
-        obj_1.display();
+        HospitalQueueSystem <string> hospital(numQueues, queueSize);
+
+        hospital.enqueue(0, "John");
+        hospital.enqueue(0, "Alice");
+        hospital.viewQueue();
+      
+        hospital.dequeue(0);
+        hospital.viewQueue();
+        hospital.enqueue(1, "Bob");
+        hospital.enqueue(2, "Charlie");
+        hospital.viewQueue();
+        hospital.viewQueue();
     }
-    catch (const string *e)
+    catch (const char *e)
     {
         std::cerr << e << '\n';
     }
