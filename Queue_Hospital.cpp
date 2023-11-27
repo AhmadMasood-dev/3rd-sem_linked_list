@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
                             std::cout << "------------------------------------" << std::endl;
                         }
                     }
-                        std::cout << "Exiting the program\n";
+                        std::cout << "Exiting...\n";
                         break;
 
                     default:
