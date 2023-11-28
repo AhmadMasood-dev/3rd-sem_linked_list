@@ -37,10 +37,10 @@ public:
         {
             temp = new Node<T>();
             temp->data = value;
-            temp->next=front;
-            temp->back=NULL;
-            front->back=temp;
-            front=temp;
+            temp->next = front;
+            temp->back = NULL;
+            front->back = temp;
+            front = temp;
         }
         node_size++;
     }
@@ -77,11 +77,20 @@ public:
             Node<T> *temp;
             temp = back->back;
             delete back;
-            back = temp;
-            back->next = NULL;
+            if (front == back)
+            {
+                delete front;
+                front = back = NULL;
+            }
+            else
+            {
+                back = temp;
+                back->next = NULL;
+            }
         }
         node_size--;
-    }void pop_front()
+    }
+    void pop_front()
     {
         if (front == NULL)
         {
@@ -89,13 +98,64 @@ public:
         }
         else
         {
+
             Node<T> *temp;
             temp = front->next;
             delete front;
-            front = temp;
-            front->back = NULL;
+            if (front == back)
+            {
+                delete front;
+                front = back = NULL;
+            }
+            else
+            {
+
+                front = temp;
+                front->back = NULL;
+            }
         }
         node_size--;
+    }
+    T Front()
+    {
+        if (front = NULL)
+        {
+            throw("list underflow");
+        }
+        else
+        {
+            return front->data;
+        }
+    }
+    T Front()
+    {
+        if (front = NULL)
+        {
+            throw("list underflow");
+        }
+        else
+        {
+            return back->data;
+        }
+    }
+    bool empty()
+    {
+        if (front == NULL && back == NULL)
+            return true;
+        else
+            return false;
+    }
+    bool full()
+    {
+        Node<T> *temp;
+        temp = new Node<T>();
+        if (temp == NULL)
+            return true;
+        else
+        {
+            delete temp;
+            return false;
+        }
     }
     void Display()
     {
@@ -123,11 +183,9 @@ int main()
         obj_1.Display();
         obj_1.pop_back();
         obj_1.push_front(8);
-
         obj_1.Display();
         obj_1.pop_front();
         obj_1.Display();
-       
     }
     catch (const char *msg)
     {
