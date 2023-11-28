@@ -166,7 +166,7 @@ public:
 };
 int main()
 {
-    char exp[20] = "([{(a+b)*(c+d)}])";
+    char exp[20] = "((())))";
     try
     {
         stack obj_1;
