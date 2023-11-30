@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
 template <class T>
 struct Node
 {
@@ -127,7 +126,7 @@ public:
             return front->data;
         }
     }
-    T Front()
+    T Back()
     {
         if (front = NULL)
         {
@@ -157,6 +156,65 @@ public:
             return false;
         }
     }
+    class iterator
+    {
+    private:
+        Node<T> *ptr;
+
+    public:
+        friend class doubly_linked_list;
+        iterator()
+        {
+            ptr = NULL;
+        }
+        T *operator->()
+        {
+            return &ptr->data;
+        }
+        T operator*()
+        {
+            return ptr->data;
+        }
+        iterator operator++(int)
+        {
+            iterator *it;
+            it = this;
+            ptr = ptr->next;
+            return it;
+        }
+        iterator &operator++()
+        {
+            this->ptr = this->ptr->next;
+            return *this;
+        }
+        bool operator==(const iterator &rhs) const
+        {
+            if (this->ptr == rhs.ptr)
+                return true;
+            else
+                return false;
+        }
+        bool operator!=(const iterator &rhs) const
+        {
+            if (this->ptr != rhs.ptr)
+                return true;
+            else
+                return false;
+        }
+    };
+
+    iterator begin()
+    {
+        iterator it;
+        it.ptr = front;
+        return it;
+    }
+    iterator end()
+    {
+        iterator it;
+        it.ptr = NULL;
+        return it;
+    }
     void Display()
     {
         Node<T> *ptr;
@@ -166,7 +224,7 @@ public:
             std::cout << ptr->data << " -> ";
             ptr = ptr->next;
         }
-        cout << "\n-----------------------------\n";
+        std::cout << "\n-----------------------------\n";
     }
 };
 
@@ -186,6 +244,13 @@ int main()
         obj_1.Display();
         obj_1.pop_front();
         obj_1.Display();
+        doubly_linked_list<int>::iterator iter;
+        iter = obj_1.begin();
+        while (iter != obj_1.end())
+        {
+            std::cout << *iter << std::endl;
+            ++iter;
+        }
     }
     catch (const char *msg)
     {
