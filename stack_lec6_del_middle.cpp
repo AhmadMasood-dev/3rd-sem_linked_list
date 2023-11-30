@@ -80,6 +80,12 @@ public:
         {
             middle_point++;
         }
+        if (middle_point < 3)
+        {
+            std::cout << "no middle point between 2 nodes\n";
+            return;
+        }
+
         Node *temp;
         Node *back_temp;
         temp = TOP;
@@ -105,6 +111,7 @@ int main()
     obj_1.push(3);
     obj_1.push(4);
     obj_1.push(5);
+    obj_1.Display();
     obj_1.del_middle();
     obj_1.Display();
 }
