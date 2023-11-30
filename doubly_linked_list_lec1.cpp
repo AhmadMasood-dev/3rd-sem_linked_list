@@ -202,7 +202,26 @@ public:
                 return false;
         }
     };
-
+    void insert_after(iterator iter, T value)
+    {
+        Node<T> *new_node = new Node<T>();
+        if (iter.ptr->back == NULL)
+        {
+            new_node->data = value;
+            new_node->next = iter.ptr;
+            new_node->back = NULL;
+            iter.ptr->back = new_node;
+            front = new_node;
+        }
+        else
+        {
+            new_node->data = value;
+            new_node->next = iter.ptr;
+            new_node->back = iter.ptr->back;
+            iter.ptr->back->next = new_node;
+            new_node->next->back = new_node;
+        }
+    }
     iterator begin()
     {
         iterator it;
