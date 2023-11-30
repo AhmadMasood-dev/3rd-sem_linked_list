@@ -80,19 +80,19 @@ public:
         {
             middle_point++;
         }
-        int array[middle_point];
-        int k = 0;
-        for (int i = size; i > middle_point; i--)
+        Node *temp;
+        Node *back_temp;
+        temp = TOP;
+        for (int i = 1; i < middle_point; i++)
         {
-            array[k] = TOP_value();
-            pop();
-            k++;
+            if (middle_point - 1 == i)
+            {
+                back_temp = temp;
+            }
+            temp = temp->next;
         }
-        pop();
-        for (int i = k - 1; i >= 0; i--)
-        {
-            push(array[i]);
-        }
+        back_temp->next = temp->next;
+        delete temp;
     }
     ~stack() {}
 };
