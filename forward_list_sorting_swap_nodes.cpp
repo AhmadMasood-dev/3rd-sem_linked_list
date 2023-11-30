@@ -71,6 +71,19 @@ public:
         pre = NULL;
 
         Node<T> *first = front;
+        Node<T> *count_t = front;
+        int count = 0;
+        while (count_t != NULL)
+        {
+            count++;
+            count_t = count_t->next;
+        }
+        if (count < 2)
+        {
+            std::cout << "List is already sorted\n";
+            return;
+        }
+
         while (first != NULL)
         {
 
@@ -87,10 +100,10 @@ public:
                     {
                         pre = NULL;
                         post = temp2->next;
-                        node2->next = temp->next;
+                        node2->next = node1;
                         node1->next = post;
-                        front = temp2;
-                        first = temp2;
+                        front = node2;
+                        first = node2;
                     }
 
                     else if (temp2->next == NULL)
@@ -112,7 +125,7 @@ public:
                     temp = temp2;
                     temp = temp->next;
                 }
-                else if (temp->data < temp2->data)
+                else if (temp->data <= temp2->data)
                 {
                     temp2 = temp;
 
@@ -183,14 +196,11 @@ int main()
 {
     // First object
     forward_list<int> obj_1;
-    obj_1.push_front(4);
-    obj_1.push_front(5);
-    obj_1.push_front(7);
+
     obj_1.push_front(9);
     std::cout << "First object data\n";
     obj_1.display();
     obj_1.sort();
-    std::cout << "First object data\n";
     obj_1.display();
 
     return 0;
