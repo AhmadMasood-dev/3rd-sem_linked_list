@@ -231,7 +231,7 @@ public:
         }
         T *operator->()
         {
-            return &this->ptr.data;
+            return &this->ptr->data;
         }
         iterator operator++()
         {
