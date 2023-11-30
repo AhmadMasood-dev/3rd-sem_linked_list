@@ -9,11 +9,13 @@ class stack
 {
 private:
     Node *TOP;
+    int size;
 
 public:
     stack()
     {
         TOP = NULL;
+        size = 0;
     }
     void push(const int num)
     {
@@ -32,6 +34,7 @@ public:
             TOP->data = num;
             TOP->next = temp;
         }
+        size++;
     }
     void pop()
     {
@@ -39,6 +42,7 @@ public:
         temp = TOP->next;
         delete TOP;
         TOP = temp;
+        size--;
     }
     bool isempty()
     {
@@ -68,6 +72,28 @@ public:
             return TOP->data;
         }
     }
+    void del_middle()
+    {
+        int middle_point;
+        middle_point = size / 2;
+        if (!(size % 2 == 0))
+        {
+            middle_point++;
+        }
+        int array[middle_point];
+        int k = 0;
+        for (int i = size; i > middle_point; i--)
+        {
+            array[k] = TOP_value();
+            pop();
+            k++;
+        }
+        pop();
+        for (int i = k - 1; i >= 0; i--)
+        {
+            push(array[i]);
+        }
+    }
     ~stack() {}
 };
 
@@ -75,6 +101,10 @@ int main()
 {
     stack obj_1;
     obj_1.push(1);
-    cout << "TOP value is " << obj_1.TOP_value() << endl;
+    obj_1.push(2);
+    obj_1.push(3);
+    obj_1.push(4);
+    obj_1.push(5);
+    obj_1.del_middle();
     obj_1.Display();
 }
