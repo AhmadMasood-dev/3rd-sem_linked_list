@@ -1,14 +1,16 @@
 #include <iostream>
 using namespace std;
+template <class T>
 struct Node
 {
-    int data;
-    Node *next;
+    T data;
+    Node<T> *next;
 };
+template <class T>
 class stack
 {
 private:
-    Node *TOP;
+    Node<T> *TOP;
     int size;
 
 public:
@@ -17,20 +19,20 @@ public:
         TOP = NULL;
         size = 0;
     }
-    void push(const int num)
+    void push(T num)
     {
         if (TOP == NULL)
         {
 
-            TOP = new Node();
+            TOP = new Node<T>();
             TOP->data = num;
             TOP->next = NULL;
         }
         else
         {
-            Node *temp = new Node();
+            Node<T> *temp = new Node<T>();
             temp = TOP;
-            TOP = new Node();
+            TOP = new Node<T>();
             TOP->data = num;
             TOP->next = temp;
         }
@@ -38,7 +40,7 @@ public:
     }
     void pop()
     {
-        Node *temp;
+        Node<T> *temp;
         temp = TOP->next;
         delete TOP;
         TOP = temp;
@@ -53,7 +55,7 @@ public:
     }
     void Display()
     {
-        Node *ptr = TOP;
+        Node<T> *ptr = TOP;
         while (ptr != NULL)
         {
             std::cout << ptr->data << " -> ";
@@ -61,7 +63,7 @@ public:
         }
         std::cout << "\n-----------------------------\n";
     }
-    int TOP_value()
+    T TOP_value()
     {
         if (TOP == NULL)
         {
@@ -72,46 +74,19 @@ public:
             return TOP->data;
         }
     }
-    void del_middle()
+    void reverse()
     {
-        int middle_point;
-        middle_point = size / 2;
-        if (!(size % 2 == 0))
-        {
-            middle_point++;
-        }
-        if (size < 3)
-        {
-            std::cout << "No middle point between 2 nodes\n";
-            return;
-        }
-
-        Node *temp;
-        Node *back_temp;
-        temp = TOP;
-        for (int i = 1; i < middle_point; i++)
-        {
-            if (middle_point - 1 == i)
-            {
-                back_temp = temp;
-            }
-            temp = temp->next;
-        }
-        back_temp->next = temp->next;
-        delete temp;
+        string ch;
+        ch = TOP->data;
     }
     ~stack() {}
 };
 
 int main()
 {
-    stack obj_1;
-    obj_1.push(1);
-    obj_1.push(2);
-    obj_1.push(3);
-    obj_1.push(4);
-    obj_1.push(5);
+    stack<string> obj_1;
+    obj_1.push("w3resource");
     obj_1.Display();
-    obj_1.del_middle();
-    obj_1.Display();
+    obj_1.reverse();
+    // obj_1.Display();
 }
