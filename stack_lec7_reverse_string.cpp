@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 template <class T>
 struct Node
@@ -76,8 +77,20 @@ public:
     }
     void reverse()
     {
-        string ch;
-        ch = TOP->data;
+        string num;
+        num = TOP->data;
+        int n = num.length();
+        char ch[n];
+        int k = 0;
+        for (int i = n - 1; i >= 0; i--)
+        {
+            ch[k] = num[i];
+            k++;
+        }
+        string reverse_string;
+        reverse_string = ch;
+        pop();
+        push(reverse_string);
     }
     ~stack() {}
 };
@@ -88,5 +101,5 @@ int main()
     obj_1.push("w3resource");
     obj_1.Display();
     obj_1.reverse();
-    // obj_1.Display();
+    obj_1.Display();
 }
