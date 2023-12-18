@@ -86,6 +86,28 @@ public:
             displayInOrder(node->right);
         }
     }
+    void find(T key)
+    {
+        std::cout << "Data is : " << key << std::endl;
+        Node<T> *temp;
+        temp = head->parent;
+        while (temp != head)
+        {
+            if (temp->data == key)
+            {
+                std::cout << "Data Found"<< "\n";
+                return;
+            }
+            else if (key < temp->data)
+            {
+                temp = temp->left;
+            }
+            else
+                temp = temp->right;
+        }
+
+        throw("Data does not found");
+    }
 
     void display()
     {
@@ -96,11 +118,22 @@ public:
 };
 int main()
 {
-    Binary_Tree<int> obj_1;
-    obj_1.insert(15);
-    obj_1.insert(7);
-    obj_1.insert(25);
-    obj_1.insert(2);
-    obj_1.display();
+    try
+    {
+
+        Binary_Tree<int> obj_1;
+        obj_1.insert(15);
+        obj_1.insert(7);
+        obj_1.insert(25);
+        obj_1.insert(2);
+        obj_1.insert(9);
+        obj_1.display();
+        obj_1.find(9);
+        obj_1.find(8);
+    }
+    catch (const char *msg)
+    {
+        std::cout << msg << '\n';
+    }
     return 0;
 }
