@@ -5,49 +5,49 @@ struct Pair
 {
     T1 first;
     T2 second;
-    Pair(T1 fi = T1(), T2 se = T2()) // giving default values
+    Pair(T1 first = T1(), T2 second = T2()) // giving default values
     {
-        first = fi;
-        second = se;
+        this->first = first;
+        this->second = second;
     }
 };
 template <class key_type, class value_type>
-struct tnode
+struct Node
 {
-    tnode<key_type, value_type> *parent;
+    Node<key_type, value_type> *parent;
     Pair<key_type, value_type> val;
-    tnode<key_type, value_type> *left, *right;
+    Node<key_type, value_type> *left, *right;
     bool is_nil;
 };
-namespace cs211
+namespace mytree
 {
     template <class key_type, class value_type>
     class map
     {
     private:
-        tnode<key_type, value_type> *H;
+        Node<key_type, value_type> *head;
         int SIZE;
 
     public:
         map()
         {
-            H = new tnode<key_type, value_type>;
-            H->parent = H->left = H->right = H;
-            H->is_nil = true;
+            head = new Node<key_type, value_type>;
+            head->parent = head->left = head->right = head;
+            head->is_nil = true;
             SIZE = 0;
         }
 
         bool empty() const
         {
-            if (H->parent == H)
+            if (head->parent == head)
                 return true;
             else
                 return false;
         }
         bool full() const
         {
-            tnode<key_type, value_type> *temp;
-            temp = new tnode<key_type, value_type>;
+            Node<key_type, value_type> *temp;
+            temp = new Node<key_type, value_type>;
             if (temp == nullptr)
                 return true;
             else
@@ -63,23 +63,23 @@ namespace cs211
 
         // void clear()
         //{
-        //	tnode<key_type, value_type>* temp_l, * temp_r;
-        //	temp_l = H->left;
-        //	temp_r = H->right;
+        //	Node<key_type, value_type>* temp_l, * temp_r;
+        //	temp_l = head->left;
+        //	temp_r = head->right;
         //		//for clearing left side
-        //		while (temp_l->parent != H)
+        //		while (temp_l->parent != head)
         //		{
-        //			tnode<key_type, value_type>* temp_d;
-        //			if (temp_l->right != H)//if any right node exists
+        //			Node<key_type, value_type>* temp_d;
+        //			if (temp_l->right != head)//if any right node exists
         //			{
         //				temp_d = temp_l->right;
 
-        //				if (temp_d->left != H)
+        //				if (temp_d->left != head)
         //				{//if its left exists
         //					delete temp_d->left;
         //					SIZE--;
         //				}
-        //				if (temp_d->right != H)
+        //				if (temp_d->right != head)
         //				{//if its right exists
         //					delete temp_d->right;
         //					SIZE--;
@@ -88,23 +88,23 @@ namespace cs211
         //				SIZE--;
         //			}
         //			temp_l = temp_l->parent;
-        //			delete H->left;
-        //			H->left = temp_l;
+        //			delete head->left;
+        //			head->left = temp_l;
         //			SIZE--;
         //		}
         //		//for clearing right side
-        //		while (temp_r->parent != H)
+        //		while (temp_r->parent != head)
         //		{
-        //			tnode<key_type, value_type>* temp_dr;
-        //			if (temp_r->left != H)//if any left node exists
+        //			Node<key_type, value_type>* temp_dr;
+        //			if (temp_r->left != head)//if any left node exists
         //			{
         //				temp_dr = temp_r->left;
-        //				if (temp_dr->left != H)
+        //				if (temp_dr->left != head)
         //				{//if its left exists
         //					delete temp_dr->left;
         //					SIZE--;
         //				}
-        //				if (temp_dr->right != H)
+        //				if (temp_dr->right != head)
         //				{//if its right exists
         //					delete temp_dr->right;
         //					SIZE--;
@@ -113,15 +113,15 @@ namespace cs211
         //				SIZE--;
         //			}
         //			temp_r = temp_r->parent;
-        //			delete H->right;
-        //			H->right = temp_r;
+        //			delete head->right;
+        //			head->right = temp_r;
         //			SIZE--;
         //		}
         //		//clearing the root node
-        //		if (temp_l->parent == H)
+        //		if (temp_l->parent == head)
         //		{
-        //			delete H->parent;
-        //			H->left = H->right = H->parent = H;
+        //			delete head->parent;
+        //			head->left = head->right = head->parent = head;
         //			SIZE--;
         //		}
         //	}
@@ -129,7 +129,7 @@ namespace cs211
         class iterator
         {
         private:
-            tnode<key_type, value_type> *ptr;
+            Node<key_type, value_type> *ptr;
             friend class map;
 
         public:
@@ -164,14 +164,14 @@ namespace cs211
         iterator begin() const
         {
             iterator it;
-            it.ptr = H->left;
+            it.ptr = head->left;
             return it;
         }
 
         iterator end() const
         {
             iterator it;
-            it.ptr = H->right;
+            it.ptr = head->right;
             return it;
         }
         value_type &at(const key_type &key)
@@ -206,10 +206,10 @@ namespace cs211
         // FIND FUNCTION
         iterator find(const key_type &key)
         {
-            tnode<key_type, value_type> *temp;
-            temp = H->parent;
+            Node<key_type, value_type> *temp;
+            temp = head->parent;
             iterator itr;
-            while (temp != H)
+            while (temp != head)
             {
                 if (key == temp->val.first)
                 {
@@ -221,27 +221,27 @@ namespace cs211
                 else
                     temp = temp->right;
             }
-            itr.ptr = H; // if value not found in the tree
+            itr.ptr =head; // if value not found in the tree
             return itr;
         }
 
         // INSERT FUNCTION
         /*void insert(const Pair<key_type, value_type>& val)
         {
-            tnode<key_type, value_type>* nn;
-            nn = new tnode<key_type, value_type>;
+            Node<key_type, value_type>* nn;
+            nn = new Node<key_type, value_type>;
             nn->val = val;
-            nn->left = nn->right = H;
+            nn->left = nn->right =head;
             nn->is_nil = false;
             SIZE++;
-            if (H->parent == H)//for first node
+            if (H->parent ==head)//for first node
             {
-                H->parent = H->left = H->right = nn;//equalling dummy head to first node
-                nn->parent = H;
+               head->parent =head->left =head->right = nn;//equalling dummy head to first node
+                nn->parent =head;
                 return;//to come out of function after inserting first value
             }
-            tnode<key_type, value_type>* temp;
-            temp = H->parent;
+            Node<key_type, value_type>* temp;
+            temp =head->parent;
             while (true)//infinite values(terminates on return)
             {
                 if (val.first == temp->val.first)//for duplicate values
@@ -252,12 +252,12 @@ namespace cs211
                 }
                 else if (val.first < temp->val.first)//value is small
                 {
-                    if (temp->left == H)//space avalaible
+                    if (temp->left ==head)//space avalaible
                     {
                         temp->left = nn;
                         nn->parent = temp;
-                        if (val.first < H->left->val.first)//for smallest value
-                            H->left = nn;
+                        if (val.first <head->left->val.first)//for smallest value
+                           head->left = nn;
                         return;
                     }
                     else
@@ -265,12 +265,12 @@ namespace cs211
                 }
                 else//(val.first > temp->val.first)value is large
                 {
-                    if (temp->right == H)//space available
+                    if (temp->right ==head)//space available
                     {
                         temp->right = nn;
                         nn->parent = temp;
-                        if (val.first > H->right->val.first)//largest value
-                            H->right = nn;
+                        if (val.first >head->right->val.first)//largest value
+                           head->right = nn;
                         return;
                     }
                     else
@@ -283,10 +283,10 @@ namespace cs211
         Pair<iterator, bool> insert(const Pair<key_type, value_type> &val)
         {
 
-            tnode<key_type, value_type> *new_node;
-            new_node = new tnode<key_type, value_type>;
+            Node<key_type, value_type> *new_node;
+            new_node = new Node<key_type, value_type>;
             new_node->val = val;
-            new_node->left = new_node->right = H;
+            new_node->left = new_node->right =head;
             new_node->is_nil = false;
             SIZE++;
 
@@ -296,14 +296,14 @@ namespace cs211
             ret.first = it;
             ret.second = true;
 
-            if (H->parent == H) // for first node
+            if (H->parent ==head) // for first node
             {
-                H->parent = H->left = H->right = new_node; // equalling dummy head to first node
-                new_node->parent = H;
+               head->parent =head->left =head->right = new_node; // equalling dummy head to first node
+                new_node->parent =head;
                 return ret; // to come out of function after inserting first value
             }
-            tnode<key_type, value_type> *temp;
-            temp = H->parent;
+            Node<key_type, value_type> *temp;
+            temp =head->parent;
             while (true) // infinite values(terminates on return)
             {
                 if (val.first == temp->val.first) // for duplicate values
@@ -317,12 +317,12 @@ namespace cs211
                 }
                 else if (val.first < temp->val.first) // value is small
                 {
-                    if (temp->left == H) // space avalaible
+                    if (temp->left ==head) // space avalaible
                     {
                         temp->left = new_node;
                         new_node->parent = temp;
-                        if (val.first < H->left->val.first) // for smallest value
-                            H->left = new_node;
+                        if (val.first <head->left->val.first) // for smallest value
+                           head->left = new_node;
                         return ret;
                     }
                     else
@@ -330,12 +330,12 @@ namespace cs211
                 }
                 else //(val.first > temp->val.first)value is large
                 {
-                    if (temp->right == H) // space available
+                    if (temp->right ==head) // space available
                     {
                         temp->right = new_node;
                         new_node->parent = temp;
-                        if (val.first > H->right->val.first) // largest value
-                            H->right = new_node;
+                        if (val.first >head->right->val.first) // largest value
+                           head->right = new_node;
                         return ret;
                     }
                     else
@@ -344,7 +344,7 @@ namespace cs211
             }
         }
 
-        void clearHelper(tnode<key_type, value_type> *node)
+        void clearHelper(Node<key_type, value_type> *node)
         {
             if (node == nullptr || node->is_nil)
             {
@@ -365,8 +365,23 @@ namespace cs211
             clearHelper(H->parent);
 
             // Reset the dummy head to its initial state
-            H->parent = H->left = H->right = H;
+           head->parent =head->left =head->right =head;
             SIZE = 0;
+        }
+        void displayInOrder(Node<key_type, value_type> *node)
+        {
+            if (node !=head)
+            {
+                displayInOrder(node->left);
+                std::cout << node->val << " ";
+                displayInOrder(node->right);
+            }
+        }
+        void display()
+        {
+            std::cout << "In-order traversal: ";
+            displayInOrder(H->parent);
+            std::cout << std::endl;
         }
     };
 }
@@ -375,7 +390,7 @@ int main()
     std::pair<int, std::string> p;
     p.first = 15;
     p.second = "taha";
-    cs211::map<int, std::string> m;
+    mytree::map<int, std::string> m;
 
     // insert a pair
     //  m.insert(p);
@@ -386,8 +401,8 @@ int main()
     m.insert({25, "ibrahim"});
     m.insert({8, "hamad"});
     m.insert({6, "ahmed"});
-
-    cs211::map<int, std::string>::iterator it;
+    m.display();
+    mytree::map<int, std::string>::iterator it;
     it = m.find(6);
     if (it == m.end())
         std::cout << "value not found:" << std::endl;
@@ -437,9 +452,9 @@ int main()
     test t;
     t.id = 1;
     t.name = "tah";
-    cs211::map<test,test>m1;
+    mytree::map<test,test>m1;
     m1.insert(t);
-    cs211::map<test, test>::iterator sit;
+    mytree::map<test, test>::iterator sit;
     sit = m1.find(t);*/
     // std::cout << (*sit).first;
 
