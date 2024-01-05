@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 template <class T1, class T2>
 struct Pair
 {
@@ -36,6 +37,15 @@ namespace mytree
                 inOrderTraversal(node->right);
             }
         }
+        void copy_r(Node<key_type, value_type> *ptr)
+        {
+            if (ptr != head)
+            {
+                insert({ptr->data.first, ptr->data.second});
+                copy_r(ptr->left);
+                copy_r(ptr->right);
+            }
+        }
 
     public:
         Binary_Tree()
@@ -45,7 +55,14 @@ namespace mytree
             head->is_nil = true;
             SIZE = 0;
         }
-
+        Binary_Tree(const Binary_Tree &rhs)
+        {
+            head = new Node<key_type, value_type>;
+            head->parent = head->left = head->right = head;
+            head->is_nil = true;
+            SIZE = 0;
+            operator=(rhs);
+        }
         bool empty() const
         {
             if (head->parent == head)
@@ -75,9 +92,9 @@ namespace mytree
             Node<key_type, value_type> *temp_left, *temp_right;
             temp_left = head->left;
             temp_right = head->right;
-            std::cout << head->right->data.first << head->right->data.second << " head->right\n";
+            // std::cout << head->right->data.first << head->right->data.second << " head->right\n";
 
-            std::cout << head->left->data.first << head->left->data.second << " head->left\n";
+            // std::cout << head->left->data.first << head->left->data.second << " head->left\n";
             // for clearing left side
             while (temp_left->parent != head)
             {
@@ -136,6 +153,11 @@ namespace mytree
                 head->left = head->right = head->parent = head;
                 SIZE--;
             }
+
+            if (head->parent == head && head->left == head && head->right == head)
+            {
+                std::cout << "Data has been Clear successfully \n";
+            }
         }
 
         class iterator
@@ -168,7 +190,7 @@ namespace mytree
 
             Pair<const key_type, value_type> *operator->()
             {
-                return reinterpret_cast<Pair<const key_type, value_type> *>(&ptr->val);
+                return reinterpret_cast<Pair<const key_type, value_type> *>(&ptr->data);
             }
         };
 
@@ -183,13 +205,41 @@ namespace mytree
         iterator end() const
         {
             iterator it;
-            it.ptr = head->right;
+            it.ptr = head;
             return it;
         }
         value_type &at(const key_type &key)
         {
             iterator it;
             it = this->find(key);
+            if (it == end())
+            {
+                throw("out of range");
+            }
+            else
+            {
+                return it.ptr->data.second;
+            }
+        }
+        value_type count(const key_type &key) const
+        {
+            iterator it;
+            it = this->find(key);
+
+            if (it == end())
+            {
+                throw("out of range");
+            }
+            else
+            {
+                return it.ptr->data.second;
+            }
+        }
+        value_type contains(const key_type &key) const
+        {
+            iterator it;
+            it = this->find(key);
+
             if (it == end())
             {
                 throw("out of range");
@@ -215,6 +265,16 @@ namespace mytree
             }
         }
 
+        Binary_Tree &operator=(const Node<key_type, value_type> &rhs)
+        {
+            if (this != rhs)
+            {
+
+                this->clear();
+                copy_r(rhs.head->parent);
+            }
+            return *this;
+        }
         // FIND FUNCTION
         iterator find(const key_type &key)
         {
@@ -243,6 +303,8 @@ namespace mytree
 
             Node<key_type, value_type> *new_node = new Node<key_type, value_type>;
             new_node->data = val;
+            // new_node->data.first = val.first;
+            // new_node->data.second = val.second;
             new_node->left = new_node->right = head;
             new_node->is_nil = false;
             SIZE++;
@@ -263,7 +325,7 @@ namespace mytree
             temp = head->parent;
             while (true) // infinite values(terminates on return)
             {
-                if (data.first == temp->data.first) // for duplicate values
+                if (new_node->data.first == temp->data.first) // for duplicate values
                 {
                     it.ptr = temp;
                     pair_val.first = it;
@@ -272,16 +334,16 @@ namespace mytree
                     SIZE--;
                     return pair_val;
                 }
-                else if (data.first < temp->data.first) // value is small
+                else if (new_node->data.first < temp->data.first) // value is small
                 {
                     if (temp->left == head) // space avalaible
                     {
                         temp->left = new_node;
                         new_node->parent = temp;
-                        if (data.first < head->left->data.first) // for smallest value
+                        if (new_node->data.first < head->left->data.first) // for smallest value
                         {
+                            head->left = new_node;
                         }
-                        head->left = new_node;
 
                         return pair_val;
                     }
@@ -294,7 +356,7 @@ namespace mytree
                     {
                         temp->right = new_node;
                         new_node->parent = temp;
-                        if (data.first > head->right->data.first) // largest value
+                        if (new_node->data.first > head->right->data.first) // largest value
                             head->right = new_node;
                         return pair_val;
                     }
@@ -302,6 +364,99 @@ namespace mytree
                         temp = temp->right; // if no space available
                 }
             }
+        }
+        int erase(const key_type &key)
+        {
+            iterator it;
+            it = find(key);
+            if (it.ptr == head)
+            {
+                return 0;
+            }
+            Node<key_type, value_type> *to_del, *parent_to_del;
+            to_del = it.ptr;
+            parent_to_del = to_del->parent;
+            // leaf node
+            if (to_del->left == head && to_del->right == head)
+            {
+                if (parent_to_del == head)
+                {
+                    head->parent = head->left = head->right = head;
+                    delete to_del;
+                    SIZE--;
+                    return 1;
+                }
+                else if (to_del == parent_to_del->left)
+                {
+                    parent_to_del->left = head;
+                }
+                else if (head->left == to_del)
+                {
+                    head->left = parent_to_del;
+                }
+                else
+                {
+                    parent_to_del->right = head;
+                    if (head->right == to_del)
+                    {
+                        head->right = parent_to_del;
+                    }
+                }
+                delete to_del;
+                SIZE--;
+                return 1;
+            }
+            // left child exit
+            else if (to_del->left != head && to_del->right == head)
+            {
+                if (parent_to_del == head)
+                {
+                    head->parent = to_del->left;
+                }
+                else if (head->right == to_del)
+                {
+                    Node<key_type, value_type> *pred;
+                    pred = to_del->left;
+                    while (pred->right != head)
+                    {
+                        pred = pred->right;
+                    }
+                    head->right = pred;
+                }
+                else if (to_del == parent_to_del->left)
+                {
+                    parent_to_del->left = to_del->left;
+                    to_del->parent = parent_to_del;
+                }
+                delete to_del;
+                SIZE--;
+                return 1;
+            } // both left and right child
+            else if (to_del->left != head && to_del->right != head)
+            {
+                Node<key_type, value_type> *node;
+                node = to_del->left;
+                while (node->right != head)
+                {
+                    node = node->right;
+                }
+                Pair<key_type, value_type> temp = to_del->data;
+                to_del->data = node->data;
+                node->data = temp;
+                if (node->left == head && node->right == head)
+                {
+                    if (node->parent->right->data.first == key)
+                    {
+                        node->parent->right = head;
+                    }
+                    else
+                        node->parent->left = node->left;
+                }
+                delete node;
+                SIZE--;
+                return 1;
+            }
+            return 0;
         }
 
         void display() const
@@ -319,68 +474,79 @@ namespace mytree
 }
 int main()
 {
-    mytree::Binary_Tree<int, std::string> m;
+    mytree::Binary_Tree<int, std::string> obj_1;
 
-    m.insert({17, "zain"});
-    m.insert({25, "ali"});
-    m.insert({6, "ahmad"});
-    m.insert({8, "dani"});
-    m.display();
+    obj_1.insert({17, "zain"});
+    obj_1.insert({25, "ali"});
+    obj_1.insert({6, "ahmad"});
+    obj_1.insert({8, "dani"});
+    obj_1.display();
     mytree::Binary_Tree<int, std::string>::iterator it;
-    it = m.find(6);
-    if (it == m.end())
-        std::cout << "value not found:" << std::endl;
+    it = obj_1.find(6);
+    if (it == obj_1.end())
+        std::cout << "Data not found " << std::endl;
     else
     {
-        std::cout << "value has been found:" << std::endl;
+        std::cout << "Data Found " << std::endl;
         std::cout << (*it).second << std::endl;
         // it->first = 13;//will give error
-        it->second = "taimoor";
+
         //(*it).first = 13;//willgive error
         //(*it).second = "ahmad";//will noyt give error
-        std::cout << "after changing value part:" << std::endl;
-        std::cout << (*it).second << std::endl;
     }
+    std::cout << "-----------------------------------------\n";
 
-    // empty function
-    if (m.empty() == true)
-        std::cout << "Binary_Tree is empty:" << std::endl;
+    it->second = "Gondal";
+    std::cout << "after changing data part" << std::endl;
+    std::cout << (*it).second << std::endl;
+    std::cout << "-----------------------------------------\n";
+    if (obj_1.empty() == true)
+        std::cout << "Binary_Tree is empty " << std::endl;
     else
-        std::cout << "Binary_Tree is not empty:" << std::endl;
-
-    // full function
-    if (m.full() == true)
-        std::cout << "Binary_Tree is full:" << std::endl;
+        std::cout << "Binary_Tree is not empty " << std::endl;
+    std::cout << "-----------------------------------------\n";
+    if (obj_1.full() == true)
+        std::cout << "Binary_Tree is full " << std::endl;
     else
-        std::cout << "Binary_Tree is not full:" << std::endl;
+        std::cout << "Binary_Tree is not full " << std::endl;
 
-    // size function
-    std::cout << "total size:" << m.size() << std::endl;
-
-    m.clear();
-    std::cout << "total size:" << m.size() << std::endl;
-
-    // another method
-    // pair<int, std::string>p1;
-    // p1 = *it;
-    // p1.first = 1;
-    // for checking
-    //(*it).first = 2;
-    // std::cout << (*it).first << std::endl;
-
-    /*struct test
+    std::cout << "-----------------------------------------\n";
+    mytree::Binary_Tree<int, std::string> obj_2;
+    obj_2 = obj_1;
+    bool op = obj_1.erase(8);
+    std::cout << "Data of obj_1 copy to obj_2\n";
+    std::cout << "-----------------------------------------\n";
+    if (op == 0)
     {
-        int id;
-        std::string name;
-    };
-    test t;
-    t.id = 1;
-    t.name = "tah";
-    mytree::Binary_Tree<test,test>m1;
-    m1.insert(t);
-    mytree::Binary_Tree<test, test>::iterator sit;
-    sit = m1.find(t);*/
-    // std::cout << (*sit).first;
+        std::cout << "Data not found  " << std::endl;
+    }
+    else
+    {
+        std::cout << "Data found and delete  " << std::endl;
+    }
+    std::cout << "-----------------------------------------\n";
+    obj_1.clear();
+    std::cout << "Total size of tree after clear function is : " << obj_1.size() << std::endl;
+    std::cout << "-----------------------------------------\n";
+    std::string file_name = "zain.txt";
+
+    std::fstream file(file_name, std::ios::in);
+    mytree::Binary_Tree<int, std::string> dic;
+
+    if (file.good())
+    {
+        std::string word;
+        file >> word;
+        dic[word] = dic[word] + 1;
+    }
+    std::ofstream file2;
+    file2.open("zain.txt");
+    auto itr = dic.begin();
+    while (itr != dic.end())
+    {
+        file2 << "\"" << itr->first << "\"," << itr->second << std::endl;
+        ++itr;
+    }
 
     return 0;
 }
