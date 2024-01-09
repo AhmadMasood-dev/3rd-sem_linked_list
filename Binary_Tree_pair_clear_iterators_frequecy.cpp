@@ -37,7 +37,7 @@ namespace mytree
                 inOrderTraversal(node->right);
             }
         }
-        void copy_r(Node<key_type, value_type> *ptr)
+        void copy_r(Node<key_type, value_type> *ptr) // call by operator=
         {
             if (ptr != head)
             {
@@ -95,21 +95,21 @@ namespace mytree
             // std::cout << head->right->data.first << head->right->data.second << " head->right\n";
 
             // std::cout << head->left->data.first << head->left->data.second << " head->left\n";
-            // for clearing left side
+            // Left side
             while (temp_left->parent != head)
             {
                 Node<key_type, value_type> *temp_check;
-                if (temp_left->right != head) // if any right node exists
+                if (temp_left->right != head) // if right node exists
                 {
                     temp_check = temp_left->right;
 
-                    if (temp_check->left != head)
-                    { // if its left exists
+                    if (temp_check->left != head) //  left exists
+                    {
                         delete temp_check->left;
                         SIZE--;
                     }
-                    if (temp_check->right != head)
-                    { // if its right exists
+                    if (temp_check->right != head) // right exists
+                    {
                         delete temp_check->right;
                         SIZE--;
                     }
@@ -121,20 +121,20 @@ namespace mytree
                 head->left = temp_left;
                 SIZE--;
             }
-            // for clearing right side
+            // Right side
             while (temp_right->parent != head)
             {
                 Node<key_type, value_type> *temp_dr;
                 if (temp_right->left != head) // if any left node exists
                 {
                     temp_dr = temp_right->left;
-                    if (temp_dr->left != head)
-                    { // if its left exists
+                    if (temp_dr->left != head)//left exists
+                    {
                         delete temp_dr->left;
                         SIZE--;
                     }
-                    if (temp_dr->right != head)
-                    { // if its right exists
+                    if (temp_dr->right != head)//right exists
+                    {
                         delete temp_dr->right;
                         SIZE--;
                     }
@@ -146,7 +146,7 @@ namespace mytree
                 head->right = temp_right;
                 SIZE--;
             }
-            // clearing the root node
+            // Root node
             if (temp_left->parent == head)
             {
                 delete head->parent;
@@ -489,10 +489,6 @@ int main()
     {
         std::cout << "Data Found " << std::endl;
         std::cout << (*it).second << std::endl;
-        // it->first = 13;//will give error
-
-        //(*it).first = 13;//willgive error
-        //(*it).second = "ahmad";//will noyt give error
     }
     std::cout << "-----------------------------------------\n";
 
