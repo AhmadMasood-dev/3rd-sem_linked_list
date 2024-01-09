@@ -128,12 +128,12 @@ namespace mytree
                 if (temp_right->left != head) // if any left node exists
                 {
                     temp_dr = temp_right->left;
-                    if (temp_dr->left != head)//left exists
+                    if (temp_dr->left != head) // left exists
                     {
                         delete temp_dr->left;
                         SIZE--;
                     }
-                    if (temp_dr->right != head)//right exists
+                    if (temp_dr->right != head) // right exists
                     {
                         delete temp_dr->right;
                         SIZE--;
@@ -165,6 +165,8 @@ namespace mytree
         private:
             Node<key_type, value_type> *ptr;
             friend class Binary_Tree;
+            Node<key_type, value_type> *head_temp;
+            int count = 0;
 
         public:
             bool operator!=(const iterator &rhs) const
@@ -191,6 +193,37 @@ namespace mytree
             Pair<const key_type, value_type> *operator->()
             {
                 return reinterpret_cast<Pair<const key_type, value_type> *>(&ptr->data);
+            }
+            iterator &operator++()
+            {
+                if (count == 0)
+                {
+                    head_temp = ptr->left;
+                    count++;
+                }
+                if (ptr->left == head_temp && ptr->right == head_temp)
+                {
+                    // std::cout << "ptr->data" << ptr->data << "\n";
+
+                    while (ptr->data > ptr->parent->data)
+                    {
+                        ptr = ptr->parent;
+                    }
+
+                    ptr = ptr->parent;
+                }
+                else if (ptr->right != head_temp)
+                {
+
+                    ptr = ptr->right;
+                    while (ptr->left != head_temp)
+                    {
+                        ptr = ptr->left;
+                    }
+                    // std::cout << "zain_left\n"            << ptr->data;
+                }
+
+                return *this;
             }
         };
 
@@ -228,11 +261,11 @@ namespace mytree
 
             if (it == end())
             {
-                throw("out of range");
+                return 0;
             }
             else
             {
-                return it.ptr->data.second;
+                return 1;
             }
         }
         value_type contains(const key_type &key) const
@@ -242,11 +275,11 @@ namespace mytree
 
             if (it == end())
             {
-                throw("out of range");
+                return 0;
             }
             else
             {
-                return it.ptr->data.second;
+                return 1;
             }
         }
         value_type &operator[](const key_type &key)
@@ -255,13 +288,12 @@ namespace mytree
             it = this->find(key);
             if (it == end())
             {
-                Pair<iterator, bool> pair_val;
-                pair_val = this->insert({key, value_type()});
+                Pair<iterator, bool> pair_val = this->insert({key, value_type()});
                 return pair_val.first->second;
             }
             else
             {
-                it.ptr->data.second;
+                return it.ptr->data.second;
             }
         }
 
@@ -474,74 +506,74 @@ namespace mytree
 }
 int main()
 {
-    mytree::Binary_Tree<int, std::string> obj_1;
-
-    obj_1.insert({17, "zain"});
-    obj_1.insert({25, "ali"});
-    obj_1.insert({6, "ahmad"});
-    obj_1.insert({8, "dani"});
-    obj_1.display();
-    mytree::Binary_Tree<int, std::string>::iterator it;
-    it = obj_1.find(6);
-    if (it == obj_1.end())
-        std::cout << "Data not found " << std::endl;
-    else
+    try
     {
-        std::cout << "Data Found " << std::endl;
+
+        mytree::Binary_Tree<int, std::string> obj_1;
+
+        obj_1.insert({17, "zain"});
+        obj_1.insert({25, "ali"});
+        obj_1.insert({6, "ahmad"});
+        obj_1.insert({8, "dani"});
+        obj_1.display();
+        mytree::Binary_Tree<int, std::string>::iterator it;
+        it = obj_1.find(6);
+        if (it == obj_1.end())
+            std::cout << "Data not found " << std::endl;
+        else
+        {
+            std::cout << "Data Found " << std::endl;
+            std::cout << (*it).second << std::endl;
+        }
+        std::cout << "-----------------------------------------\n";
+
+        it->second = "Gondal";
+        std::cout << "after changing data part" << std::endl;
         std::cout << (*it).second << std::endl;
-    }
-    std::cout << "-----------------------------------------\n";
+        std::cout << "-----------------------------------------\n";
 
-    it->second = "Gondal";
-    std::cout << "after changing data part" << std::endl;
-    std::cout << (*it).second << std::endl;
-    std::cout << "-----------------------------------------\n";
-    if (obj_1.empty() == true)
-        std::cout << "Binary_Tree is empty " << std::endl;
-    else
-        std::cout << "Binary_Tree is not empty " << std::endl;
-    std::cout << "-----------------------------------------\n";
-    if (obj_1.full() == true)
-        std::cout << "Binary_Tree is full " << std::endl;
-    else
-        std::cout << "Binary_Tree is not full " << std::endl;
+        mytree::Binary_Tree<int, std::string> obj_2;
+        obj_2 = obj_1;
+        bool op = obj_1.erase(8);
+        std::cout << "Data of obj_1 copy to obj_2\n";
+        std::cout << "-----------------------------------------\n";
+        if (op == 0)
+        {
+            std::cout << "Data not found  " << std::endl;
+        }
+        else
+        {
+            std::cout << "Data found and delete  " << std::endl;
+        }
+        std::cout << "-----------------------------------------\n";
+        obj_1.clear();
+        std::cout << "Total size of tree after clear function is : " << obj_1.size() << std::endl;
+        std::cout << "-----------------------------------------\n";
+        std::string file_name = "zain.txt";
 
-    std::cout << "-----------------------------------------\n";
-    mytree::Binary_Tree<int, std::string> obj_2;
-    obj_2 = obj_1;
-    bool op = obj_1.erase(8);
-    std::cout << "Data of obj_1 copy to obj_2\n";
-    std::cout << "-----------------------------------------\n";
-    if (op == 0)
-    {
-        std::cout << "Data not found  " << std::endl;
-    }
-    else
-    {
-        std::cout << "Data found and delete  " << std::endl;
-    }
-    std::cout << "-----------------------------------------\n";
-    obj_1.clear();
-    std::cout << "Total size of tree after clear function is : " << obj_1.size() << std::endl;
-    std::cout << "-----------------------------------------\n";
-    std::string file_name = "zain.txt";
+        std::fstream file(file_name, std::ios::in);
+        mytree::Binary_Tree<int, std::string> dic;
 
-    std::fstream file(file_name, std::ios::in);
-    mytree::Binary_Tree<int, std::string> dic;
-
-    if (file.good())
-    {
-        std::string word;
-        file >> word;
-        dic[word] = dic[word] + 1;
+        while (file.good())
+        {
+            std::string word;
+            file >> word;
+            dic[word]++;
+        }
+        file.close();
+        std::ofstream file2;
+        file2.open("zain.txt");
+        mytree::Binary_Tree<int, std::string>::iterator itr = dic.begin();
+        while (itr != dic.end())
+        {
+            file2 << "\"" << itr->first << "\"," << itr->second << std::endl;
+            ++itr;
+        }
+        file2.close();
     }
-    std::ofstream file2;
-    file2.open("zain.txt");
-    auto itr = dic.begin();
-    while (itr != dic.end())
+    catch (const char *msg)
     {
-        file2 << "\"" << itr->first << "\"," << itr->second << std::endl;
-        ++itr;
+        std::cout << msg << '\n';
     }
 
     return 0;
