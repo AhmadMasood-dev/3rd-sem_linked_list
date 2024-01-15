@@ -21,6 +21,7 @@ class BinarySearchTree
 {
 private:
     Node *root;
+    int size;
 
 public:
     BinarySearchTree() { root = nullptr; }
@@ -38,6 +39,7 @@ public:
     bool insert(int value)
     {
         Node *newNode = new Node(value);
+        size++;
         if (root == nullptr)
         {
             root = newNode;
@@ -68,7 +70,10 @@ public:
             }
         }
     }
-
+    int Size()
+    {
+        return size;
+    }
     bool contains(int value)
     {
         if (root == nullptr)
