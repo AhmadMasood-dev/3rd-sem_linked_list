@@ -55,10 +55,25 @@ public:
         }
     }
 
-    void insert(int val)
+    void insert(T val)
     {
         int idx = hash(val);
         sorted_insert(&data[idx], val);
+    }
+    bool find(T key)
+    {
+        int idx = hash(key);
+        Node<T> *temp = data[idx].next;
+        while (temp != NULL)
+        {
+            if (temp->data == key)
+            {
+                std::cout<<temp->data;
+                return true;
+            }
+            temp = temp->next;
+        }
+        return false;
     }
 
     void display()
@@ -66,7 +81,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             cout << i << ": ";
-            Node<T> *ptr = data[i].next; 
+            Node<T> *ptr = data[i].next;
             while (ptr != NULL)
             {
                 cout << ptr->data << " -> ";
@@ -81,7 +96,24 @@ int main()
 {
     myHash_table<int> obj_1;
     obj_1.insert(14);
+    obj_1.insert(34);
     obj_1.insert(24);
+    obj_1.insert(22);
+    obj_1.insert(23);
+    obj_1.insert(12);
+    obj_1.insert(25);
+    obj_1.insert(19);
+    bool op = obj_1.find(34);
+    if (op == 1)
+    {
+        std::cout << "  Data Fount successfully\n";
+    }
+    else
+    {
+    std:;
+        cout << "Data not found\n";
+    }
+    std::cout << "-------------------------------\n";
     obj_1.display();
     cout << "zain" << endl;
     return 0;
