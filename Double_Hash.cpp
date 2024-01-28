@@ -11,7 +11,7 @@ private:
 
     int hash(int val)
     {
-        return val % 10;
+        return (val % 10);
     }
 
 public:
@@ -24,13 +24,18 @@ public:
             data[i] = FREE;
         }
     }
+    int hash_double(T key)
+    {
+        int idx = 7 - (key % 7);
+        return idx;
+    }
     int probe(T key)
     {
         int idx = hash(key);
         int i = 0;
         while (data[idx] != -1 && data[idx] != -2)
         {
-            idx = (idx + i) % size;//i*i
+            idx = (idx + i * hash_double(key)) % size;
             i++;
         }
         return idx;
@@ -41,8 +46,12 @@ public:
         int i = 0;
         while (data[idx] != key)
         {
-            idx = (idx + i) % size;//i*i
+            idx = (idx + i * hash_double(key)) % size;
             i++;
+            if (i > size)
+            {
+                throw("Hash table value not found \n");
+            }
         }
         return idx;
     }
@@ -51,12 +60,14 @@ public:
         if (!full())
         {
             int idx = hash(key);
+
             if (data[idx] != -1)
             {
                 idx = probe(key);
             }
 
             data[idx] = key;
+            //  std::cout<<"idx is : "<<idx<<"data[idx]"<<data[idx]<<"\n";
         }
         else
         {
@@ -89,7 +100,7 @@ public:
 
         for (int i = 0; i < size; i++)
         {
-            std::cout << " data " << i  << " is : " << data[i] << "\n";
+            std::cout << " data " << i << " is : " << data[i] << "\n";
         }
 
         std::cout << "-------------------------------\n";
@@ -153,16 +164,14 @@ int main()
     {
 
         myHash_table<int> obj_1;
-        obj_1.insert(32);
-        obj_1.insert(14);
-        obj_1.insert(24);
-        obj_1.insert(22);
-        obj_1.insert(23);
-        obj_1.insert(9);
-        obj_1.insert(28);
-        obj_1.insert(19);
+        obj_1.insert(5);
+        obj_1.insert(25);
+        obj_1.insert(15);
+        obj_1.insert(35);
+        obj_1.insert(95);
+
         obj_1.display();
-        bool op = obj_1.find(19);
+        bool op = obj_1.find(35);
         if (op == 1)
         {
             std::cout << "  Data Found successfully\n";
@@ -172,7 +181,7 @@ int main()
             std::cout << "Data not found\n";
         }
         std::cout << "-------------------------------\n";
-        obj_1.delete_key(22);
+        obj_1.delete_key(35);
 
         obj_1.display();
 
