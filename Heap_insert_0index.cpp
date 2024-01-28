@@ -28,12 +28,13 @@ public:
     }
     void delete_root()
     {
+        // std::cout << " n is: " << data [n] << std::endl;
         int x, i, j;
         x = data[0];
-        data[0] = data[n - 1];
+        data[0] = data[n ];
         i = 0;
-        j = i + 1 * 2;
-        while (j < n - 1)
+        j = i * 2+1;
+        while (j < n )
         {
             if (data[j] < data[j + 1])
             {
@@ -53,21 +54,21 @@ public:
                 break;
             }
         }
-        data[n - 1] = x;
+        data[n ] = x;
         n--;
     }
     void display()
     {
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i <= n; i++)
         {
             std::cout << "Data at index " << i << " is : " << data[i] << "\n";
         }
         std::cout << "------------------------------------------\n";
     }
-    ~ Heap(){
+    ~Heap()
+    {
         delete[] data;
     }
-    
 };
 
 int main()
