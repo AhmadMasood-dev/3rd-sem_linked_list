@@ -10,8 +10,8 @@ private:
         Node *right;
         int height;
     };
-
     Node *root;
+
 
     int getHeight(Node *n)
     {
