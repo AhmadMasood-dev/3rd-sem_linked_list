@@ -32,7 +32,6 @@
         "thread": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "deque": "cpp",
         "list": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
