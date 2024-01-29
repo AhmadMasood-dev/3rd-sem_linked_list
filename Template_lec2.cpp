@@ -16,7 +16,7 @@ public:
     void display()
     {
         cout << array1 << endl
-             << array2;
+             << array2; 
     }
 };
 

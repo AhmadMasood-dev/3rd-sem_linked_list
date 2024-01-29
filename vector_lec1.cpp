@@ -18,7 +18,7 @@ template <class T>
 void print(vector<T> &v)
 {
     cout << "prnt function" << endl;
-    for (int i = 0; i < v.size(); i++)
+    for (int i = 0; i < v.size(); i++) 
     {
         cout << "Vector " << i + 1 << " is : " << v[i] << endl;
         //  cout << "Vector at " << i + 1 << " is : " << v.at(i) << endl;

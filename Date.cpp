@@ -19,7 +19,7 @@ public:
     {
         year = y;
     }
-    
+     
     int getday()
     {
         return day;

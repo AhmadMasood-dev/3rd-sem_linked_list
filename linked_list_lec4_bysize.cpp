@@ -13,7 +13,7 @@ int main()
     int size;
     cout << "Enter number of nodes : ";
     cin >> size;
-
+ 
     Node *ptr = top;
     for (int i = 1; i <= size; i++)
     {

@@ -15,7 +15,7 @@ void displayMenu()
 {
     std::cout << "\n-------Hospital Queue System-------\n";
     std::cout << "1. Add Patient to Queue\n";
-    std::cout << "2. Remove Patient from Queue\n";
+    std::cout << "2. Remove Patient from Queue\n"; 
     std::cout << "3. Display Queue\n";
     std::cout << "4. save to file and Exit \n";
     std::cout << "------------------------------------------\n";

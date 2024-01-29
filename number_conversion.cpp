@@ -19,7 +19,7 @@ public:
     {
         int ans = 0;
         int power = 1;
-
+ 
         for (int i = number.length() - 1; i >= 0; i--)
         {
             int digit = number[i] - '0';

@@ -19,7 +19,7 @@ int main()
 	for (int i = 0; i < 8; i++) {
 		sum2++;
 	}
-
+ 
 	//part3 n^2+1
 	int sum3 = 0;
 	for (int i = 0; i < 30; i++) {

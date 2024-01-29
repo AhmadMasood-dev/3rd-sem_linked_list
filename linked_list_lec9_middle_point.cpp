@@ -20,7 +20,7 @@ int main()
     int size;
     cout << "Enter size of nodes  ";
     cin >> size;
-
+ 
     while (size < 2)
     {
         cout << "invalid size\nEnter again  ";

@@ -10,7 +10,7 @@ private:
 public:
     void setvalues(int n)
     {
-        size = n;
+        size = n; 
         array = new int[size];
         for (int i = 0; i < size; i++)
         {

@@ -11,7 +11,7 @@ int main()
     Node *head = new Node();
     Node *head_ptr;
     head_ptr = head;
-    int size;
+    int size; 
     cout << "Enter number of nodes : ";
     cin >> size;
     for (int i = 1; i <= size; i++)

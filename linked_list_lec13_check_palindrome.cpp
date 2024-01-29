@@ -18,7 +18,7 @@ int main()
     for (int i = 0; i < size; i++)
     {
         Node *newnode = new Node();
-        cin >> newnode->letter;
+        cin >> newnode->letter; 
         newnode->next = NULL;
         head_ptr->next = newnode;
         name[i] = newnode->letter;

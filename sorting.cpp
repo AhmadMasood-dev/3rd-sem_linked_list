@@ -8,7 +8,7 @@ class Sorting
 {
 private:
     int *array;
-    int size;
+    int size; 
     static int count;
 
 public:

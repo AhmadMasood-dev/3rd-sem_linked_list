@@ -23,7 +23,7 @@ public:
         {
             TOP++;
             data[TOP] = value;
-        }
+        } 
     }
     void pop()
     {

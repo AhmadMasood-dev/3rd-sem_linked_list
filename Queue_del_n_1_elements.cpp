@@ -14,7 +14,7 @@ private:
     int n;
 
 public:
-    Queue()
+    Queue() 
     {
         front = back = NULL;
         n = 0;
@@ -22,7 +22,7 @@ public:
     void push(int value)
     {
         Node<T> *temp;
-        temp = new Node<T>();
+        temp = new Node<T>(); 
         if (front == NULL)
         {
             temp->data = value;

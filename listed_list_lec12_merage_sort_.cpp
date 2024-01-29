@@ -21,7 +21,7 @@ int main()
     {
         Node *newNode = new Node();
         cout << "Enter the value of Node " << i << " is : ";
-        cin >> newNode->data;
+        cin >> newNode->data; 
         newNode->next = NULL;
         head_ptr->next = newNode;
         head_ptr = head_ptr->next;

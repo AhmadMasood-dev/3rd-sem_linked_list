@@ -12,7 +12,7 @@ public:
     void setvalues(int n)
     {
         size = n;
-        array = new int[size];
+        array = new int[size]; 
         for (int i = 0; i < size; i++)
         {
             array[i] = i + i + 1;

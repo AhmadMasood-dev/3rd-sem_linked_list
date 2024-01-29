@@ -12,7 +12,7 @@ public:
     {
         size = m;
         array = new T[size];
-    }
+    } 
     
     T vectorsum(vector &v)
     {

@@ -61,44 +61,44 @@ void display(student s[], int size)
 
 int main(int argc, char *argv)
 {
-    std::fstream file("record.bin", std::ios::binary | std::ios::in);
-    if (!file.is_open())
-    {
-        std::cout << "File does not exist" << std::endl;
-        file.open("record.bin", std::ios::out | std::ios::binary);
-    }
-    else
-    {
-        exist(file);
-    }
-    int size;
-    std::cout << "Enter the number of students: ";
-    std::cin >> size;
-    student std1[20];
-    data(std1, size);
-    if (argc == 3)
-    {
-        int flag = std::stoi(argv[1]);
-        for (int i = 0; i < size; i++)
-        {
-            if (flag == std1[i].rollnumber)
-            {
-                std::cin.ignore();
-                strcpy(std1[i].name, argv[2]);
-            }
-        }
-    }
-    if (argc == 4)
-    {
-        int flag = std::stoi(argv[2]);
-        char n[20] = argv[3];
-        size++;
-        std1[size - 1].rollnumber = flag;
-        std::cin.ignore();
-        std::strcpy(std1[size - 1].name, argv[3]);
-    }
-    store("record.bin", std1, size);
-    display(std1, size);
+    // std::fstream file("record.bin", std::ios::binary | std::ios::in);
+    // if (!file.is_open())
+    // {
+    //     std::cout << "File does not exist" << std::endl;
+    //     file.open("record.bin", std::ios::out | std::ios::binary);
+    // }
+    // else
+    // {
+    //     exist(file);
+    // }
+    // int size;
+    // std::cout << "Enter the number of students: ";
+    // std::cin >> size;
+    // student std1[20];
+    // data(std1, size);
+    // if (argc == 3)
+    // {
+    //     int flag = std::stoi(argv[1]);
+    //     for (int i = 0; i < size; i++)
+    //     {
+    //         if (flag == std1[i].rollnumber)
+    //         {
+    //             std::cin.ignore();
+    //             strcpy(std1[i].name, argv[2]);
+    //         }
+    //     }
+    // }
+    // if (argc == 4)
+    // {
+    //     int flag = std::stoi(argv[2]);
+    //     char n[20] = argv[3];
+    //     size++;
+    //     std1[size - 1].rollnumber = flag;
+    //     std::cin.ignore();
+    //     std::strcpy(std1[size - 1].name, argv[3]);
+    // }
+    // store("record.bin", std1, size);
+    // display(std1, size);
 
     return 0;
 }

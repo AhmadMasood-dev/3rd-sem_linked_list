@@ -16,7 +16,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             array[i] = i + 2;
-        }
+        } 
         std::cout << std::endl;
     }
     void bubble_sort()

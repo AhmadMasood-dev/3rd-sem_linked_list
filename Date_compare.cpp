@@ -21,7 +21,7 @@ public:
 		
 	}
 	void display() {
-		cout << "your current date is " << day << ":" << month << ":" << year << endl;
+		cout << "your current date is " << day <<  ":" << month << ":" << year << endl;
 	}
 	int compare(Date D) 
 	{		

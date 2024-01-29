@@ -19,7 +19,7 @@ public:
             cin >> array[i];
         }
         cout << endl;
-    }
+    } 
     void bubble_sort()
     {
         int temp;

@@ -11,7 +11,7 @@ public:
 int main()
 {
     Node *head;
-    Node *first = new Node();
+    Node *first = new Node(); 
 
     head = first;
     Node *ptr1;

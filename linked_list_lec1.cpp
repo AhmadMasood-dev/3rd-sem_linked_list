@@ -12,7 +12,7 @@ public:
         cout << "constructor invoke : " << endl;
         data1 = 1;
     }
-};
+}; 
 void print(Node *n)
 {
     while (n != NULL)

@@ -11,14 +11,14 @@ class forward_list
 private:
     Node<T> *front;
     int size;
-
+  
 public:
     forward_list()
     {
         front = NULL;
         size = 0;
     }
-
+ 
     void push_front(const int &val)
     {
         Node<T> *temp;

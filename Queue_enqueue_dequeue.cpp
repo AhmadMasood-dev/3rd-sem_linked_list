@@ -11,7 +11,7 @@ struct circularQueue
  
  
 int isEmpty(struct circularQueue *q){
-    if(q->r==q->f){
+    if(q->r==q->f){ 
         return 1;
     }
     return 0;

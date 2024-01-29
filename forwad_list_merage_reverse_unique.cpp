@@ -15,7 +15,7 @@ private:
 public:
     forward_list()
     {
-        front = NULL;
+        front = NULL; 
         size = 0;
     }
 

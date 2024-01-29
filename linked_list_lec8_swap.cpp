@@ -15,7 +15,7 @@ int main()
     Node *three = new Node;
     Node *four = new Node;
     Node *five = new Node;
-    Node *six = new Node;
+    Node *six = new Node; 
 
     one->data = 1;
     one->next = two;

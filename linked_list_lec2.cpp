@@ -14,7 +14,7 @@ int main()
     Node *second = new Node();
     Node *third = new Node();
     Node *forth = new Node();
-    Node *five = new Node();
+    Node *five = new Node(); 
     top = first;
     first->data = 1;
     first->next = second;

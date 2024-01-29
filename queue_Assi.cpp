@@ -18,7 +18,7 @@ using namespace std;
 // };
 
 int main(int argc,char *argv[])
-{
+{ 
 
     std::queue<std::pair<int, std::string>> obj_1[20];
     int new_data = -1;

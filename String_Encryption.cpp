@@ -14,7 +14,7 @@ public:
         alphabets = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Key_Words = "zyxwvutsrqponmlkjihgfedcba ZYXWVUTSRQPONMLKJIHGFEDCBA";
     }
-    void encrypt()
+    void encrypt() 
     {
         string secret_message;
         cout << "Enter your secret message  " << endl;

@@ -13,7 +13,7 @@ using namespace std;
 //         array1 = a;
 //         array2 = b;
 //     }
-// };
+// }; 
 template <class T1, class T2>
 float avg(T1 a, T2 b)
 {

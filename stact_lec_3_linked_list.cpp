@@ -11,7 +11,7 @@ private:
     Node *TOP;
     int size;
 
-public:
+public: 
     stack()
     {
         TOP = NULL;

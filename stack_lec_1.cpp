@@ -11,7 +11,7 @@ public:
     {
         data = new int[size];
         size = s;
-        TOP = 0;
+        TOP = 0; 
     }
     stack(const stack &rhs)
     {

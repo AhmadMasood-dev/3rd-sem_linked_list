@@ -15,9 +15,9 @@ public:
         Back_data = -1;
         size = queueSize;
         array = new T[size];
-    }
+    } 
     ~queue_hospital()
-    {
+    { delete [] array;
     }
     bool isFull()
     {

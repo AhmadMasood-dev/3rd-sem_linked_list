@@ -16,7 +16,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             cout << "Enter a value of " << i + 1 << " is : ";
-            cin >> array[i];
+            cin >> array[i]; 
         }
         cout << endl;
     }

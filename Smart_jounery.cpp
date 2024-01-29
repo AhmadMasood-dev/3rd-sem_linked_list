@@ -5,10 +5,10 @@ class Driving_license
 private:
     int license_id;
     int issue_year;
-
+ 
 public:
     Driving_license()
-    {
+    { 
         license_id = 0;
         issue_year = 0;
     }
@@ -16,7 +16,7 @@ public:
     {
         license_id = license;
         issue_year = exp;
-    }
+    } 
 
     void set_license(int id, int year)
     {

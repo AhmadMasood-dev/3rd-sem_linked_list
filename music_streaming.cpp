@@ -17,10 +17,15 @@ public:
     string getTitle() const
     {
         return title;
+<<<<<<< HEAD
     }
+    string getArtist() const 
+=======
+    } 
     string getArtist() const
+>>>>>>> db48d9cd7d939c1e2a486578a946f65555fffc34
     {
-        return artist;
+        return artist; 
     }
     int getDuration() const
     {

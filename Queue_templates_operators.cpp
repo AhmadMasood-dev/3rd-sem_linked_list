@@ -17,7 +17,7 @@ class queue
 public:
 	queue()
 	{
-		Front_data = nullptr;
+		Front_data = nullptr; 
 		Back_data = nullptr;
 		n = 0;
 	}

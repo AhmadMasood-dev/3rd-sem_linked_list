@@ -15,7 +15,7 @@ int main()
     cout << "Enter number of nodes : ";
     cin >> size;
     for (int i = 1; i <= size; i++)
-    {
+    { 
         cout << "Enter a data of Node  " << i << " is : ";
         Node *newnode = new Node();
         cin >> newnode->data;

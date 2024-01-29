@@ -13,7 +13,7 @@ void data(student s[], int size)
 	for (int i = 0; i < size; i++)
 	{
 		std::cout << "Enter roll number of student " << i + 1 << std::endl;
-		std::cout << "Roll number is: ";
+		std::cout << "Roll number is: "; 
 		std::cin >> s[i].rollnumber;
 		std::cin.ignore();
 		std::cout << "Name is: ";

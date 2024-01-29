@@ -13,7 +13,7 @@ int main()
     Node *head = new Node();
     Node *head_ptr;
     head_ptr = head;
-
+ 
     int size = 4;
     cout << "Enter size of nodes 1 ";
     // cin >> size;

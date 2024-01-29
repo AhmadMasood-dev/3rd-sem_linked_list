@@ -11,7 +11,7 @@ int main()
 {
     Node *head = new Node();
     Node *ptr1;
-
+ 
     ptr1 = head;
     int size;
     cout << "Enter size of nodes  ";

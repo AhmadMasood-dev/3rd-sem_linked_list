@@ -17,7 +17,7 @@ void data(student s[], int size)
         std::cin >> s[i].rollnumber;
         std::cout << "Name is : ";
         std::cin >> s[i].name;
-    }
+    } 
 }
 
 void display(student s[], int size)
